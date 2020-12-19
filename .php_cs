@@ -40,7 +40,7 @@ $fixers = array(
 	'indentation_type'                           => true,
 	'header_comment' => [
 	    'comment_type' => 'PHPDoc',
-		'header' => "This file is part of Cxz \r\n\r\n(c) Flaravel 2020 <https://github.com/flaravel/cxz> \r\n\r\n document https://learnku.com/blog/FLaravel\r\n\r\nvisited",
+		'header' => "This file is part of Cxz \r\n\r\n(c) Cxz 2020 <https://github.com/flaravel/cxz> \r\n ",
 	],
 	'braces'                                     => ['position_after_functions_and_oop_constructs' => 'same'], //设置大括号换行，暂时根本Psr
 	'binary_operator_spaces'                     => ['default' => 'align_single_space'], //等号对齐、数字箭头符号对齐

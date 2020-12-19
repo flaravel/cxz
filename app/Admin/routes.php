@@ -22,4 +22,10 @@ Route::group([
 	'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
 	$router->get('/', 'HomeController@index');
+
+	$router->group(['prefix' => 'product'], function (Router $router) {
+
+	    // 品牌
+	    $router->resource('brand','ProductBrandController');
+    });
 });
