@@ -1,4 +1,4 @@
-@servers(['cxz' => ['root@106.54.7.136']])
+@servers(['cxz' => ['hulu_pro']])
 
 @task('deploy', ['on' => ['cxz']])
 cd /var/docker/dnmp/www/cxz

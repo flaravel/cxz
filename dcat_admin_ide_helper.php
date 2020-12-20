@@ -56,8 +56,13 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection brand_name
      * @property Grid\Column|Collection desc
      * @property Grid\Column|Collection logo_url
-     * @property Grid\Column|Collection status
+     * @property Grid\Column|Collection on_sale
      * @property Grid\Column|Collection deleted_at
+     * @property Grid\Column|Collection status
+     * @property Grid\Column|Collection category_name
+     * @property Grid\Column|Collection category_image
+     * @property Grid\Column|Collection sort
+     * @property Grid\Column|Collection path
      * @property Grid\Column|Collection sequence
      * @property Grid\Column|Collection batch_id
      * @property Grid\Column|Collection family_hash
@@ -111,8 +116,13 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection brand_name(string $label = null)
      * @method Grid\Column|Collection desc(string $label = null)
      * @method Grid\Column|Collection logo_url(string $label = null)
-     * @method Grid\Column|Collection status(string $label = null)
+     * @method Grid\Column|Collection on_sale(string $label = null)
      * @method Grid\Column|Collection deleted_at(string $label = null)
+     * @method Grid\Column|Collection status(string $label = null)
+     * @method Grid\Column|Collection category_name(string $label = null)
+     * @method Grid\Column|Collection category_image(string $label = null)
+     * @method Grid\Column|Collection sort(string $label = null)
+     * @method Grid\Column|Collection path(string $label = null)
      * @method Grid\Column|Collection sequence(string $label = null)
      * @method Grid\Column|Collection batch_id(string $label = null)
      * @method Grid\Column|Collection family_hash(string $label = null)
@@ -171,8 +181,13 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection brand_name
      * @property Show\Field|Collection desc
      * @property Show\Field|Collection logo_url
-     * @property Show\Field|Collection status
+     * @property Show\Field|Collection on_sale
      * @property Show\Field|Collection deleted_at
+     * @property Show\Field|Collection status
+     * @property Show\Field|Collection category_name
+     * @property Show\Field|Collection category_image
+     * @property Show\Field|Collection sort
+     * @property Show\Field|Collection path
      * @property Show\Field|Collection sequence
      * @property Show\Field|Collection batch_id
      * @property Show\Field|Collection family_hash
@@ -226,8 +241,13 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection brand_name(string $label = null)
      * @method Show\Field|Collection desc(string $label = null)
      * @method Show\Field|Collection logo_url(string $label = null)
-     * @method Show\Field|Collection status(string $label = null)
+     * @method Show\Field|Collection on_sale(string $label = null)
      * @method Show\Field|Collection deleted_at(string $label = null)
+     * @method Show\Field|Collection status(string $label = null)
+     * @method Show\Field|Collection category_name(string $label = null)
+     * @method Show\Field|Collection category_image(string $label = null)
+     * @method Show\Field|Collection sort(string $label = null)
+     * @method Show\Field|Collection path(string $label = null)
      * @method Show\Field|Collection sequence(string $label = null)
      * @method Show\Field|Collection batch_id(string $label = null)
      * @method Show\Field|Collection family_hash(string $label = null)

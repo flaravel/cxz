@@ -12,6 +12,8 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\Grid\Restore;
 use App\Admin\Actions\Grid\RestoreMany;
 use App\Models\Product\ProductBrand;
+use App\Models\Product\ProductCategory;
+use App\Traits\RestoreTrait;
 use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -20,6 +22,7 @@ use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductBrandController extends AdminController {
+    use RestoreTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -40,19 +43,7 @@ class ProductBrandController extends AdminController {
 				$filter->equal('status')->select(ProductBrand::$saleMap);
 			});
 
-			$grid->actions(function (Grid\Displayers\Actions $actions) {
-                if (request('_scope_') == 'trashed') {
-                    $actions->disableDelete();
-                    $actions->append(new Restore(ProductBrand::class));
-                }
-            });
-
-			$grid->batchActions(function (Tools\BatchActions $batch) {
-                if (request('_scope_') == 'trashed') {
-                    $batch->disableDelete();
-                    $batch->add(new RestoreMany(ProductBrand::class));
-                }
-            });
+            $this->showRestore($grid, ProductCategory::class);
 		});
 	}
 

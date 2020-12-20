@@ -23,9 +23,13 @@ Route::group([
 ], function (Router $router) {
 	$router->get('/', 'HomeController@index');
 
+	// 产品相关
 	$router->group(['prefix' => 'product'], function (Router $router) {
 
 	    // 品牌
 	    $router->resource('brand','ProductBrandController');
+
+	    // 分类
+	    $router->resource('category','ProductCategoryController');
     });
 });
