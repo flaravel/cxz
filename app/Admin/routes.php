@@ -33,6 +33,6 @@ Route::group([
 	    $router->resource('category','ProductCategoryController');
 
 	    // 商品
-	    $router->resource('/','ProductController');
+	    $router->resource('/goods','ProductController')->except(['show']);
     });
 });

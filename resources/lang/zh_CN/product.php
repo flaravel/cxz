@@ -27,7 +27,9 @@ return [
 		'sort'           => '排序',
 		'sales_actual'   => '实际销量',
 		'sales_initial'  => '初始销量',
+		'sales'          => '销量',
 		'content'        => '产品详情',
+		'stock'        => '库存',
 	],
 	'options' => [
 	],

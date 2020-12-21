@@ -46,7 +46,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|ProductCategory withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProductCategory withoutTrashed()
- * @mixin \Eloquent
  * @property-read ProductCategory $parent
  */
 class ProductCategory extends Model {

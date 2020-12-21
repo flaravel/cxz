@@ -78,10 +78,10 @@ class ProductCategoryController extends AdminController {
 				})->required();
 			$form->text('category_name')->required();
 			$form->image('category_image')
-				->disk('oss')
 				->uniqueName()
 				->maxSize(2 * 1024)
 				->autoUpload()
+                ->saveAsString()
 				->saveFullUrl();
 			$form->number('sort')->value(50);
 			$form->radio('on_sale')->options(ProductCategory::$saleMap)->required();

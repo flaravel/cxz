@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->decimal('market_price',10,2)->comment('产品市场价格')->default(0);
             $table->boolean('on_sale')->default(0)->comment('是否上架 0-下架 1-上架');
             $table->unsignedInteger('sort')->default(0)->comment('排序 数字越大越靠前');
+            $table->unsignedInteger('stock')->default(0)->comment('库存');
             $table->unsignedInteger('sales_actual')->default(0)->comment('实际销量');
             $table->unsignedInteger('sales_initial')->default(0)->comment('初始销量');
             $table->text('content')->comment('产品详情');

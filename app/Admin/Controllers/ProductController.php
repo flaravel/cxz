@@ -10,9 +10,9 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Product\Product;
+use App\Models\Product\ProductCategory;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductController extends AdminController {
@@ -22,52 +22,25 @@ class ProductController extends AdminController {
 	 * @return Grid
 	 */
 	protected function grid() {
-		return Grid::make(Product::with(['brand','category']), function (Grid $grid) {
+		return Grid::make(new Product(), function (Grid $grid) {
 			$grid->column('id')->sortable();
-            $grid->column('product_image');
+            $grid->column('product_image')->image('',45,45);
             $grid->column('product_name');
-            $grid->column('brand.name',admin_trans('product.fields.brand_id'));
-			$grid->column('category.category_name',admin_trans('product.fields.category_id'));
 			$grid->column('price');
 			$grid->column('market_price');
-			$grid->column('on_sale');
+			$grid->column('on_sale')->using(Product::$saleMap)->dot(Product::$dotMap);
 			$grid->column('sort');
-			$grid->column('sales_actual');
-			$grid->column('sales_initial');
+			$grid->column('sales',admin_trans('product.fields.sales'))->display(function () {
+			    /**@var $product Product*/
+			    $product = $this;
+			    return $product->sales_initial + $product->sales_actual;
+            });
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
 				$filter->equal('id');
+				$filter->like('product_name');
 			});
-		});
-	}
-
-	/**
-	 * Make a show builder.
-	 *
-	 * @param mixed $id
-	 *
-	 * @return Show
-	 */
-	protected function detail($id) {
-		return Show::make($id, new Product(), function (Show $show) {
-			$show->field('id');
-			$show->field('brand_id');
-			$show->field('category_id');
-			$show->field('delivery_id');
-			$show->field('product_name');
-			$show->field('selling_point');
-			$show->field('product_image');
-			$show->field('product_banner');
-			$show->field('price');
-			$show->field('market_price');
-			$show->field('on_sale');
-			$show->field('sort');
-			$show->field('sales_actual');
-			$show->field('sales_initial');
-			$show->field('content');
-			$show->field('created_at');
-			$show->field('updated_at');
 		});
 	}
 
@@ -79,23 +52,33 @@ class ProductController extends AdminController {
 	protected function form() {
 		return Form::make(new Product(), function (Form $form) {
 			$form->display('id');
-			$form->text('brand_id');
-			$form->text('category_id');
-			$form->text('delivery_id');
-			$form->text('product_name');
-			$form->text('selling_point');
-			$form->text('product_image');
-			$form->text('product_banner');
-			$form->text('price');
-			$form->text('market_price');
-			$form->text('on_sale');
-			$form->text('sort');
-			$form->text('sales_actual');
-			$form->text('sales_initial');
-			$form->text('content');
-
-			$form->display('created_at');
-			$form->display('updated_at');
+			$form->select('category_id')->options(function () {
+                return collect(ProductCategory::selectOptions())->forget(0);
+            })->saving(function ($v) {
+                return (int) $v;
+            })->required();
+			$form->text('product_name')->required();
+			$form->textarea('selling_point');
+			$form->image('product_image')
+                ->uniqueName()
+                ->autoUpload()
+                ->saveFullUrl()
+                ->required()
+                ->maxSize(1 * 1024);
+			$form->multipleImage('product_banner')
+                ->uniqueName()
+                ->autoUpload()
+                ->saveFullUrl()
+                ->required()
+                ->limit(5)
+                ->maxSize(1 * 1024);
+			$form->decimal('price')->required();
+			$form->decimal('market_price')->default(0);
+			$form->switch('on_sale')->required();
+			$form->number('sort')->min(0)->max(9999999)->help(admin_trans('cxz.goods_sort_help'))->default(0);
+			$form->number('sales_initial')->min(0)->max(9999999)->help(admin_trans('cxz.goods_sales_help'))->default(0);
+			$form->number('stock')->min(0)->help(admin_trans('cxz.goods_stock_help'));
+			$form->editor('content');
 		});
 	}
 }

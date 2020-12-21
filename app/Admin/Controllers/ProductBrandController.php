@@ -76,10 +76,9 @@ class ProductBrandController extends AdminController {
 			$form->text('brand_name')->required();
 			$form->textarea('desc');
 			$form->image('logo_url')
-                ->required()
-                ->disk('oss')
                 ->uniqueName()
                 ->maxSize(2 * 1024)
+                ->saveAsString()
                 ->autoUpload()
                 ->saveFullUrl();
 			$form->switch('status')->options(ProductBrand::$saleMap);

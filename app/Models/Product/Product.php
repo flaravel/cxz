@@ -9,6 +9,7 @@
 
 namespace App\Models\Product;
 
+use App\Models\ProductProperties;
 use App\Traits\OnSaleTrait;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $market_price 产品市场价格
  * @property int $on_sale 是否上架 0-下架 1-上架
  * @property int $sort 排序 数字越大越靠前
+ * @property int $stock 库存
  * @property int $sales_actual 实际销量
  * @property int $sales_initial 初始销量
  * @property string $content 产品详情
@@ -64,6 +66,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model {
 	use HasFactory,HasDateTimeFormatter,SoftDeletes,OnSaleTrait;
 
+	protected $casts = [
+	    'product_banner' => 'json'
+    ];
 	/**
 	 * 分类
 	 *
@@ -81,4 +86,13 @@ class Product extends Model {
 	public function brand() {
 		return $this->belongsTo(ProductBrand::class);
 	}
+
+    /**
+     * 属性
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+	public function properties() {
+        return $this->hasMany(ProductProperties::class,'product_id','id');
+    }
 }

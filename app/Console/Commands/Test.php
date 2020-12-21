@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
+use App\Models\Product\ProductCategory;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -52,101 +55,101 @@ class Test extends Command
 
     public function cates() {
         $url = 'https://m.you.163.com/item/cateList.json';
-
-        $res = Http::get($url);
-
+        $res = Http::withOptions([
+            'timeout' => 600
+        ])->get($url,[
+            'categoryId' => 1011000,
+            '__timestamp' => intval(time().'000')
+        ]);
         $data = $res->json();
+        foreach ($data['data']['categoryGroupList'] as $v) {
+//            if (ProductCategory::query()->where('category_name',$v['name'])->exists()) {
+//              continue;
+//            }
+//            $pcreate = ProductCategory::query()->create([
+//                'parent_id' => 203,
+//                'category_name' => $v['name'],
+//                'on_sale' => 1,
+//                'sort' => 0
+//            ]);
+            foreach ($v['categoryList'] as $vv) {
+//                $str = 'product/brand/'.Str::random(40).'.png';
+//                Storage::disk('oss')->put($str,file_get_contents($vv['wapBannerUrl']));
+//                $path = Storage::disk('oss')->url($str);
+//                $create = ProductCategory::query()->create([
+//                    'parent_id' => $pcreate->id,
+//                    'category_name' => $vv['name'],
+//                    'category_image' => $path,
+//                    'on_sale' => 1,
+//                    'sort' => 0
+//                ]);
+                $this->goods($vv['superCategoryId'], $vv['id'],$vv['name']);
+            }
+        }
+    }
 
-        $newData = [];
-        foreach ($data['data'] as $v) {
-            foreach ($v['categoryList'] as $brand) {
-                $str = 'product/brand/'.Str::random(40).'.png';
-                Storage::disk('oss')->put($str,file_get_contents($brand['categoryLogo']));
-                $path = Storage::disk('oss')->url($str);
-                $newData[] = [
-                    'brand_name' => $brand['categoryName'],
-                    'logo_url' => $path,
-                    'on_sale' => 1,
+    public function goods($categoryId, $subCategoryId,$name) {
+        $url = 'http://m.you.163.com/item/list.json';
+
+        $res = Http::withOptions([
+            'timeout' => 600
+        ])->get($url,[
+            'categoryId' => $categoryId,
+            'categoryType' => 0,
+            'subCategoryId' => $subCategoryId,
+            '__timestamp' => intval(time().'000')
+        ]);
+        // 获取分类
+        $cateId = ProductCategory::query()->where('category_name',$name)->value('id');
+        $data = $res->json();
+        foreach ($data['data']['categoryItems']['itemList'] as $v) {
+            if (Product::query()->where('product_name', $v['name'])->exists()) {
+                continue;
+            }
+            $url2 = 'http://m.you.163.com/item/detail?id='.$v['id'];
+            $detail = Http::withOptions([
+                'timeout' => 600
+            ])->withHeaders([
+                'Accept' => 'application/json'
+            ])->get($url2);
+            $detail = $detail->json();
+            $str = 'product/'.Str::random(40).'.png';
+            Storage::disk('oss')->put($str,file_get_contents($v['listPicUrl']));
+            $imagePath = Storage::disk('oss')->url($str);
+            $goods = new Product();
+            $goods->category_id = $cateId;
+            $goods->product_name = $v['name'];
+            $goods->product_banner = [
+                $this->getImage($detail['item']['itemDetail']['picUrl1']),
+                $this->getImage($detail['item']['itemDetail']['picUrl2']),
+                $this->getImage($detail['item']['itemDetail']['picUrl3']),
+            ];
+            $goods->selling_point  = $v['simpleDesc'];
+            $goods->product_image = $imagePath;
+            $goods->price = $v['retailPrice'];
+            $goods->market_price = $v['counterPrice'] ?? 0;
+            $goods->on_sale = 1;
+            $goods->stock = 0;
+            $goods->content =$detail['item']['itemDetail']['detailHtml'];
+            $goods->save();
+
+            $attrData = [];
+            foreach ($detail['item']['attrList'] as $p) {
+                $attrData[] = [
+                    'name' => $p['attrName'],
+                    'product_id' => $goods->id,
+                    'value' => $p['attrValue'],
                     'created_at' => now()->toDateTimeString(),
                     'updated_at' => now()->toDateTimeString(),
                 ];
-                $create = ProductBrand::query()->create([
-                    'brand_name' => $brand['categoryName'],
-                    'logo_url' => $path,
-                    'created_at' => now()->toDateTimeString(),
-                    'updated_at' => now()->toDateTimeString(),
-                ]);
-                dd($create);
             }
-        }
-        ProductBrand::query()->insert($newData);
-    }
-
-    public function cate() {
-        $url = 'https://tea.chazhenxuan.com/v1/category/classify/list';
-
-        $res = Http::post($url);
-
-        $data = $res->json();
-
-        foreach ($data['data'] as $v) {
-            if ($v['categoryName'] != '品牌') {
-                foreach ($v['categoryList'] as $vv) {
-                    $url2 = 'https://tea.chazhenxuan.com/v1/product/list/app';
-                    $res2 = Http::send('post',$url2,[
-                        'form_params' => [
-                            'pageNum' => 1,
-                            'categoryId' => $vv['nodeCategoryId']
-                        ]
-                    ]);
-                    $data2 = $res2->json();
-                    foreach ($data2['data']['productList'] as $vvv) {
-                        $url3 = 'https://tea.chazhenxuan.com/v1/product/app/detail';
-                        $res3 = Http::send('post',$url3,[
-                            'form_params' => [
-                                'productId' => $vvv['productId'],
-                                'specialId' => '',
-                                'userId' => '',
-                            ]
-                        ]);
-                        $cateId = GoodsCategory::query()->where('category_name',$vv['categoryName'])->value('id');
-                        $data3 = $res3->json();
-                        if (isset($data3['data'])) {
-                            $goods = new Goods();
-                            $goods->supplier_id = 1;
-                            $goods->cate_id = $cateId;
-                            $goods->name = $data3['data']['teaProduct']['productName'];
-                            $goods->thumb = $data3['data']['teaProduct']['productImage'];
-                            $goods->price = $data3['data']['teaAttrProduct'][0]['productPrice'];
-                            $goods->original_price = $data3['data']['teaAttrProduct'][0]['virtualPrice'];
-                            $goods->cost_price = 10;
-                            $goods->on_sale = 1;
-                            $goods->stock = 999;
-                            $goods->content = $this->getContent($data3['data']['teaProductBannerBottom']);
-
-                            $goods->save();
-
-                            foreach ($data3['data']['teaProductBannerTop'] as $key => $img) {
-                                if ($key == 5) {
-                                    continue;
-                                }
-                                GoodsImage::query()->create([
-                                    'image' => $img['productImage'],
-                                    'goods_id' => $goods->id
-                                ]);
-                            }
-                        }
-                    }
-                }
-            }
+            $goods->properties()->insert($attrData);
         }
     }
 
-    protected function getContent($data) {
-        $str = '';
-        foreach ($data as $v) {
-            $str .= "<p><img src='{$v['productImage']}' alt=''></p>";
-        }
-        return $str;
+    private function getImage($url) {
+        $str = 'product/'.Str::random(40).'.png';
+        Storage::disk('oss')->put($str,file_get_contents($url));
+        return Storage::disk('oss')->url($str);
     }
 }
