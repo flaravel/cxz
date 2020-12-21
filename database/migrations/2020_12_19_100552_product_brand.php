@@ -17,7 +17,7 @@ class ProductBrand extends Migration
      */
     public function up()
     {
-        Schema::create('product_brand', function (Blueprint $table) {
+        Schema::create('product_brands', function (Blueprint $table) {
             $table->id();
             $table->string('brand_name')->comment('品牌名称')->default('');
             $table->string('desc')->comment('品牌描述')->default('');

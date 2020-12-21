@@ -9,20 +9,16 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Grid\Restore;
-use App\Admin\Actions\Grid\RestoreMany;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\RestoreTrait;
-use Dcat\Admin\Actions\Action;
+use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductBrandController extends AdminController {
-    use RestoreTrait;
+    use AdminTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -34,13 +30,13 @@ class ProductBrandController extends AdminController {
             $grid->column('logo_url')->image('',45,45);
             $grid->column('brand_name');
 			$grid->column('desc')->limit(30);
-			$grid->column('status')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);
+			$grid->column('on_sale')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
-                $filter->scope('trashed')->onlyTrashed();
-				$filter->equal('brand_name');
-				$filter->equal('status')->select(ProductBrand::$saleMap);
+                $this->showFilterPanel($filter,true);
+				$filter->equal('brand_name')->width(4);
+				$filter->equal('on_sale')->select(ProductBrand::$saleMap)->width(4);
 			});
 
             $this->showRestore($grid, ProductCategory::class);

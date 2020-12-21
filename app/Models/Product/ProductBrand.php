@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $brand_name 品牌名称
  * @property string $desc 品牌描述
  * @property string $logo_url 品牌LOGO
- * @property int $status 0-下架 1-上架
+ * @property int $on_sale 0-下架 1-上架
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

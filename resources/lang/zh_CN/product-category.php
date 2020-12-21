@@ -18,7 +18,7 @@ return [
 		'category_image' => '分类图片',
 		'sort'           => '排序',
 		'path'           => '上级路径',
-		'on_sale'        => '是否展示',
+		'on_sale'        => '是否上架',
 	],
 	'options' => [
 	],
