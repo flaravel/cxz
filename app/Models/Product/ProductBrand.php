@@ -40,12 +40,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductBrand whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|ProductBrand withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProductBrand withoutTrashed()
- * @mixin \Eloquent
  */
 class ProductBrand extends Model {
 	use HasFactory,HasDateTimeFormatter,SoftDeletes,OnSaleTrait;
 
 	protected $fillable = [
-		'brand_name', 'desc', 'logo_url', 'status'
+		'brand_name', 'desc', 'logo_url', 'on_sale'
 	];
 }

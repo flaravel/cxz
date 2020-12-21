@@ -31,5 +31,8 @@ Route::group([
 
 	    // 分类
 	    $router->resource('category','ProductCategoryController');
+
+	    // 商品
+	    $router->resource('/','ProductController');
     });
 });

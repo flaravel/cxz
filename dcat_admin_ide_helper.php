@@ -63,11 +63,22 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection category_image
      * @property Grid\Column|Collection sort
      * @property Grid\Column|Collection path
+     * @property Grid\Column|Collection brand_id
+     * @property Grid\Column|Collection category_id
+     * @property Grid\Column|Collection delivery_id
+     * @property Grid\Column|Collection product_name
+     * @property Grid\Column|Collection selling_point
+     * @property Grid\Column|Collection product_image
+     * @property Grid\Column|Collection product_banner
+     * @property Grid\Column|Collection price
+     * @property Grid\Column|Collection market_price
+     * @property Grid\Column|Collection sales_actual
+     * @property Grid\Column|Collection sales_initial
+     * @property Grid\Column|Collection content
      * @property Grid\Column|Collection sequence
      * @property Grid\Column|Collection batch_id
      * @property Grid\Column|Collection family_hash
      * @property Grid\Column|Collection should_display_on_index
-     * @property Grid\Column|Collection content
      * @property Grid\Column|Collection entry_uuid
      * @property Grid\Column|Collection tag
      *
@@ -123,11 +134,22 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection category_image(string $label = null)
      * @method Grid\Column|Collection sort(string $label = null)
      * @method Grid\Column|Collection path(string $label = null)
+     * @method Grid\Column|Collection brand_id(string $label = null)
+     * @method Grid\Column|Collection category_id(string $label = null)
+     * @method Grid\Column|Collection delivery_id(string $label = null)
+     * @method Grid\Column|Collection product_name(string $label = null)
+     * @method Grid\Column|Collection selling_point(string $label = null)
+     * @method Grid\Column|Collection product_image(string $label = null)
+     * @method Grid\Column|Collection product_banner(string $label = null)
+     * @method Grid\Column|Collection price(string $label = null)
+     * @method Grid\Column|Collection market_price(string $label = null)
+     * @method Grid\Column|Collection sales_actual(string $label = null)
+     * @method Grid\Column|Collection sales_initial(string $label = null)
+     * @method Grid\Column|Collection content(string $label = null)
      * @method Grid\Column|Collection sequence(string $label = null)
      * @method Grid\Column|Collection batch_id(string $label = null)
      * @method Grid\Column|Collection family_hash(string $label = null)
      * @method Grid\Column|Collection should_display_on_index(string $label = null)
-     * @method Grid\Column|Collection content(string $label = null)
      * @method Grid\Column|Collection entry_uuid(string $label = null)
      * @method Grid\Column|Collection tag(string $label = null)
      */
@@ -188,11 +210,22 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection category_image
      * @property Show\Field|Collection sort
      * @property Show\Field|Collection path
+     * @property Show\Field|Collection brand_id
+     * @property Show\Field|Collection category_id
+     * @property Show\Field|Collection delivery_id
+     * @property Show\Field|Collection product_name
+     * @property Show\Field|Collection selling_point
+     * @property Show\Field|Collection product_image
+     * @property Show\Field|Collection product_banner
+     * @property Show\Field|Collection price
+     * @property Show\Field|Collection market_price
+     * @property Show\Field|Collection sales_actual
+     * @property Show\Field|Collection sales_initial
+     * @property Show\Field|Collection content
      * @property Show\Field|Collection sequence
      * @property Show\Field|Collection batch_id
      * @property Show\Field|Collection family_hash
      * @property Show\Field|Collection should_display_on_index
-     * @property Show\Field|Collection content
      * @property Show\Field|Collection entry_uuid
      * @property Show\Field|Collection tag
      *
@@ -248,11 +281,22 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection category_image(string $label = null)
      * @method Show\Field|Collection sort(string $label = null)
      * @method Show\Field|Collection path(string $label = null)
+     * @method Show\Field|Collection brand_id(string $label = null)
+     * @method Show\Field|Collection category_id(string $label = null)
+     * @method Show\Field|Collection delivery_id(string $label = null)
+     * @method Show\Field|Collection product_name(string $label = null)
+     * @method Show\Field|Collection selling_point(string $label = null)
+     * @method Show\Field|Collection product_image(string $label = null)
+     * @method Show\Field|Collection product_banner(string $label = null)
+     * @method Show\Field|Collection price(string $label = null)
+     * @method Show\Field|Collection market_price(string $label = null)
+     * @method Show\Field|Collection sales_actual(string $label = null)
+     * @method Show\Field|Collection sales_initial(string $label = null)
+     * @method Show\Field|Collection content(string $label = null)
      * @method Show\Field|Collection sequence(string $label = null)
      * @method Show\Field|Collection batch_id(string $label = null)
      * @method Show\Field|Collection family_hash(string $label = null)
      * @method Show\Field|Collection should_display_on_index(string $label = null)
-     * @method Show\Field|Collection content(string $label = null)
      * @method Show\Field|Collection entry_uuid(string $label = null)
      * @method Show\Field|Collection tag(string $label = null)
      */
