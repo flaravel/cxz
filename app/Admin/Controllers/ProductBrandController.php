@@ -30,7 +30,7 @@ class ProductBrandController extends AdminController {
             $grid->column('logo_url')->image('',45,45);
             $grid->column('brand_name');
 			$grid->column('desc')->limit(30);
-			$grid->column('on_sale')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);
+			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
@@ -56,7 +56,7 @@ class ProductBrandController extends AdminController {
 			$show->field('brand_name');
 			$show->field('desc');
 			$show->field('logo_url')->image('',45,45);
-			$show->field('status')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);;
+			$show->field('on_sale')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);;
 			$show->field('created_at');
 			$show->field('updated_at');
 		});
@@ -77,7 +77,7 @@ class ProductBrandController extends AdminController {
                 ->saveAsString()
                 ->autoUpload()
                 ->saveFullUrl();
-			$form->switch('status')->options(ProductBrand::$saleMap);
+			$form->switch('on_sale')->required();
 		});
 	}
 }

@@ -20,7 +20,7 @@ return [
 		'product_name'   => '商品名称',
 		'selling_point'  => '商品卖点',
 		'product_image'  => '商品主图',
-		'product_banner' => '商品Banner',
+		'product_banner' => '商品图册',
 		'price'          => '商品售价',
 		'market_price'   => '商品市场价',
 		'on_sale'        => '是否上架',
@@ -30,6 +30,7 @@ return [
 		'sales'          => '销量',
 		'content'        => '产品详情',
 		'stock'        => '库存',
+		'value'        => '属性值',
 	],
 	'options' => [
 	],

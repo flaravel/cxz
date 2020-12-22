@@ -85,7 +85,7 @@ class ProductCategoryController extends AdminController {
                 ->saveAsString()
 				->saveFullUrl();
 			$form->number('sort')->value(50);
-			$form->radio('on_sale')->options(ProductCategory::$saleMap)->required();
+			$form->switch('on_sale')->required();
 
 			$form->deleting(function (Form $form) {
 				$count = ProductCategory::query()->where('parent_id', $form->getKey())->count();
