@@ -12,13 +12,14 @@ namespace App\Admin\Controllers;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\RestoreTrait;
+use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Widgets\Tab;
 
 class ProductController extends AdminController {
-	use RestoreTrait;
+	use AdminTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -29,7 +30,7 @@ class ProductController extends AdminController {
 			$grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
 			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
-			$grid->column('product_name');
+			$grid->column('product_name')->copyable()->bold();
 			$grid->column('price');
 			$grid->column('market_price');
 			$grid->column('on_sale')->switch();
@@ -56,9 +57,11 @@ class ProductController extends AdminController {
 					$query->whereIn('category_id', $categoryId);
 				})->width(3)->select($tree);
 			});
+            $grid->header(function ($collection) {
+                return admin_view('admin.goods_status');
+            });
 			$this->showRestore($grid, Product::class);
-
-            $grid->disableViewButton();
+			$this->showBatchOnSale($grid,Product::class);
         });
 	}
 

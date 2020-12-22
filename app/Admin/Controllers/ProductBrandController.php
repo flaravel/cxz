@@ -11,14 +11,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\RestoreTrait;
+use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductBrandController extends AdminController {
-    use RestoreTrait;
+    use AdminTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -30,7 +30,7 @@ class ProductBrandController extends AdminController {
             $grid->column('logo_url')->image('',45,45);
             $grid->column('brand_name');
 			$grid->column('desc')->limit(30);
-			$grid->column('on_sale')->switch();
+			$grid->column('on_sale')->bool();
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
@@ -68,14 +68,14 @@ class ProductBrandController extends AdminController {
 	protected function form() {
 		return Form::make(new ProductBrand(), function (Form $form) {
 			$form->text('brand_name')->required();
-			$form->textarea('desc');
+			$form->textarea('desc')->saveAsString();
 			$form->image('logo_url')
                 ->uniqueName()
                 ->maxSize(1 * 1024)
                 ->saveAsString()
                 ->autoUpload()
                 ->saveFullUrl();
-			$form->switch('on_sale')->required();
+			$form->switch('on_sale');
 		});
 	}
 }

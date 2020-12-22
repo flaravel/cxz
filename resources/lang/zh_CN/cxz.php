@@ -17,11 +17,18 @@ return [
 	'goods_sort_help'             => '数字越大越靠前',
 	'goods_sales_help'            => '商品默认销量',
 	'goods_stock_help'            => '当库存不足时，用户无法下单',
-    'goods' => [
-        'setting'      => '基础设置',
-        'resource'     => '资源设置',
-        'attributes'   => '属性设置',
-        'more_image_max'   => '允许最大上传5张图片',
-        'skus'   => 'SKU设置',
-    ]
+	'on_sale_up'                  => '批量上架',
+	'on_sale_down'                => '批量下架',
+	'on_sale_down_confirm'        => '确认批量下架么？',
+	'on_sale_up_confirm'          => '确认批量上架么？',
+	'action_success'              => '操作成功',
+	'action_error'                => '操作失败',
+	'please_choose'                => '请先选择操作项！',
+	'goods'                       => [
+		'setting'          => '基础设置',
+		'resource'         => '资源设置',
+		'attributes'       => '属性设置',
+		'more_image_max'   => '允许最大上传5张图片',
+		'skus'             => 'SKU设置',
+	]
 ];

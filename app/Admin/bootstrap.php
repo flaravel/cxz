@@ -11,7 +11,7 @@
  */
 
 use App\Admin\Actions\Grid\Restore;
-use App\Admin\Actions\Grid\RestoreMany;
+use App\Admin\Actions\Grid\RestoreBatch;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid\Filter;
@@ -50,6 +50,7 @@ Grid::resolving(function (Grid $grid) {
         $actions->disableEdit();
     });
     $grid->option('dialog_form_area',['70%','80%']);
+    $grid->toolsWithOutline(false);
 });
 
 $script = <<<JS
@@ -63,3 +64,4 @@ JS;
 Admin::script($script);
 
 app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));
+

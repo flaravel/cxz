@@ -278,7 +278,7 @@ return [
     */
     'layout' => [
         // default, blue, blue-light, green
-        'color' => 'blue-light',
+        'color' => 'blue',
 
         'body_class' => '',
 

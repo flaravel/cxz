@@ -12,11 +12,11 @@ namespace App\Traits;
 use Dcat\Admin\Admin;
 
 trait OnSaleTrait {
-	public static function UN_SALE() {
+	public static function DOWN_SALE() {
 		return 0;
 	}
 
-	public static function SALE() {
+	public static function ON_SALE() {
 		return 1;
 	}
 

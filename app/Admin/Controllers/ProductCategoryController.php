@@ -11,14 +11,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\RestoreTrait;
+use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductCategoryController extends AdminController {
-    use RestoreTrait;
+    use AdminTrait;
 
 	/**
 	 * Make a grid builder.
@@ -31,7 +31,7 @@ class ProductCategoryController extends AdminController {
 			$grid->column('category_name')->tree(true);
 			$grid->column('category_image')->image('', 45, 45);
 			$grid->column('sort');
-			$grid->column('on_sale')->switch();
+			$grid->column('on_sale')->bool();
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
@@ -84,7 +84,7 @@ class ProductCategoryController extends AdminController {
                 ->saveAsString()
 				->saveFullUrl();
 			$form->number('sort')->value(50);
-			$form->switch('on_sale')->required();
+			$form->switch('on_sale');
 
 			$form->deleting(function (Form $form) {
 				$count = ProductCategory::query()->where('parent_id', $form->getKey())->count();

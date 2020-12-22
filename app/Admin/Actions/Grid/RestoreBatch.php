@@ -16,7 +16,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class RestoreMany extends BatchAction {
+class RestoreBatch extends BatchAction {
 	public $model;
 
 	public function __construct(string  $model = null) {
