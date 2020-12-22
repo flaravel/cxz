@@ -11,6 +11,7 @@ namespace App\Traits;
 
 use App\Admin\Actions\Grid\Restore;
 use App\Admin\Actions\Grid\RestoreMany;
+use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 
 trait AdminTrait {

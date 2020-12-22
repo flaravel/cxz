@@ -20,7 +20,7 @@ return [
 		'extensions'       => '扩展',
 		'scaffold'         => '代码生成器',
 		'icons'            => '图标',
-		'product'          => '产品',
+		'product'          => '商品管理',
 		'brand'            => '品牌',
 		'category'         => '分类',
 		'goods'            => '商品',

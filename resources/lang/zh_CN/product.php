@@ -23,7 +23,7 @@ return [
 		'product_banner' => '商品Banner',
 		'price'          => '商品售价',
 		'market_price'   => '商品市场价',
-		'on_sale'        => '上架',
+		'on_sale'        => '是否上架',
 		'sort'           => '排序',
 		'sales_actual'   => '实际销量',
 		'sales_initial'  => '初始销量',

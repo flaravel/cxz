@@ -35,8 +35,8 @@ class ProductBrandController extends AdminController {
 
 			$grid->filter(function (Grid\Filter $filter) {
                 $this->showFilterPanel($filter,true);
-				$filter->equal('brand_name')->width(4);
-				$filter->equal('on_sale')->select(ProductBrand::$saleMap)->width(4);
+				$filter->equal('brand_name')->width(3);
+				$filter->equal('on_sale')->select(ProductBrand::$saleMap)->width(3);
 			});
 
             $this->showRestore($grid, ProductCategory::class);

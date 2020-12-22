@@ -28,7 +28,7 @@ class ProductController extends AdminController {
 		return Grid::make(Product::with('category'), function (Grid $grid) {
 			$grid->model()->latest();
 			$grid->column('id')->sortable();
-			$grid->column('product_image')->image('', 45, 45);
+			$grid->column('product_image')->image('', 90, 90);
 			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
 			$grid->column('product_name');
 			$grid->column('price');
@@ -45,8 +45,7 @@ class ProductController extends AdminController {
 			$grid->filter(function (Grid\Filter $filter) {
 			    $this->showFilterPanel($filter,true);
 				$tree = collect(ProductCategory::selectOptions())->forget(0);
-				$filter->equal('id')->width(4);
-				$filter->like('product_name')->width(4);
+				$filter->like('product_name')->width(3);
 				$filter->where('category_id', function ($query) {
 					$cateId = request()->get('category_id');
 					$pCate = ProductCategory::query()->where('id', $cateId)->first();
@@ -57,9 +56,7 @@ class ProductController extends AdminController {
 						->push((int)$cateId)
 						->toArray();
 					$query->whereIn('category_id', $categoryId);
-				})->width(4)->select($tree);
-
-				$filter->equal('on_sale')->width(4)->select(Product::$saleMap);
+				})->width(3)->select($tree);
 			});
 			$this->showRestore($grid, Product::class);
 

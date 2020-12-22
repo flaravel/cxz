@@ -16,7 +16,7 @@ return [
 		'brand_name' => '品牌名称',
 		'desc'       => '品牌描述',
 		'logo_url'   => '品牌LOGO',
-		'on_sale'     => '上架',
+		'on_sale'     => '是否上架',
 	],
 	'options' => [
 

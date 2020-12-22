@@ -28,16 +28,16 @@ class ProductCategoryController extends AdminController {
 	protected function grid() {
 		return Grid::make(new ProductCategory(), function (Grid $grid) {
 			$grid->column('id')->sortable();
-			$grid->column('category_name')->tree();
+			$grid->column('category_name')->tree(true);
 			$grid->column('category_image')->image('', 45, 45);
 			$grid->column('sort');
-			$grid->column('on_sale')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);
+			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
                 $this->showFilterPanel($filter,true);
-				$filter->equal('category_name')->width(4);
-                $filter->equal('on_sale')->width(4)->select(ProductCategory::$saleMap);
+				$filter->equal('category_name')->width(3);
+                $filter->equal('on_sale')->width(3)->select(ProductCategory::$saleMap);
 			});
 
 			$this->showRestore($grid, ProductCategory::class);
