@@ -58,7 +58,12 @@ class ProductController extends AdminController {
 				})->width(3)->select($tree);
 			});
             $grid->header(function ($collection) {
-                return admin_view('admin.goods_status');
+                $tab = Tab::make();
+                $tab->noPadding();
+                $tab->addLink('出售中','',true);
+                $tab->addLink('已下架','');
+                $tab->addLink('回收站','');
+                return $tab;
             });
 			$this->showRestore($grid, Product::class);
 			$this->showBatchOnSale($grid,Product::class);
