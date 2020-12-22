@@ -11,14 +11,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\AdminTrait;
+use App\Traits\RestoreTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductBrandController extends AdminController {
-    use AdminTrait;
+    use RestoreTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -34,12 +34,10 @@ class ProductBrandController extends AdminController {
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
-                $this->showFilterPanel($filter,true);
 				$filter->equal('brand_name')->width(3);
 				$filter->equal('on_sale')->select(ProductBrand::$saleMap)->width(3);
 			});
-
-            $this->showRestore($grid, ProductCategory::class);
+            $this->showRestore($grid, ProductBrand::class);
 		});
 	}
 
@@ -73,7 +71,7 @@ class ProductBrandController extends AdminController {
 			$form->textarea('desc');
 			$form->image('logo_url')
                 ->uniqueName()
-                ->maxSize(2 * 1024)
+                ->maxSize(1 * 1024)
                 ->saveAsString()
                 ->autoUpload()
                 ->saveFullUrl();

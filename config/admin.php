@@ -278,19 +278,19 @@ return [
     */
     'layout' => [
         // default, blue, blue-light, green
-        'color' => 'default',
+        'color' => 'blue-light',
 
         'body_class' => '',
 
         'sidebar_collapsed' => false,
 
         // light, primary, dark
-        'sidebar_style' => 'light',
+        'sidebar_style' => 'dark',
 
-        'dark_mode_switch' => false,
+        'dark_mode_switch' => true,
 
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
-        'navbar_color' => '',
+        'navbar_color' => 'bg-dark',
     ],
 
     /*

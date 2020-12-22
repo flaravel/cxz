@@ -12,13 +12,13 @@ namespace App\Admin\Controllers;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\AdminTrait;
+use App\Traits\RestoreTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductController extends AdminController {
-	use AdminTrait;
+	use RestoreTrait;
 	/**
 	 * Make a grid builder.
 	 *
@@ -26,7 +26,6 @@ class ProductController extends AdminController {
 	 */
 	protected function grid() {
 		return Grid::make(Product::with('category'), function (Grid $grid) {
-			$grid->model()->latest();
 			$grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
 			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
@@ -43,7 +42,6 @@ class ProductController extends AdminController {
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
-			    $this->showFilterPanel($filter,true);
 				$tree = collect(ProductCategory::selectOptions())->forget(0);
 				$filter->like('product_name')->width(3);
 				$filter->where('category_id', function ($query) {
@@ -106,7 +104,7 @@ class ProductController extends AdminController {
                     ->help(admin_trans('cxz.goods.more_image_max'));
                 $form->editor('content');
             })->tab(admin_trans('cxz.goods.attributes'),function (Form $form) {
-                $form->hasMany('properties', '',function (Form\NestedForm $form) {
+                $form->hasMany('properties','',function (Form\NestedForm $form) {
                     $form->text('name');
                     $form->text('value');
                 });

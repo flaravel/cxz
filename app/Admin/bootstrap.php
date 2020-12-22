@@ -10,9 +10,12 @@
  * visited
  */
 
+use App\Admin\Actions\Grid\Restore;
+use App\Admin\Actions\Grid\RestoreMany;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-
+use Dcat\Admin\Grid\Filter;
+use \Dcat\Admin\Grid;
 /**
  * Dcat-admin - admin builder based on Laravel.
  * @author jqh <https://github.com/jqhph>
@@ -31,3 +34,32 @@ use Dcat\Admin\Form;
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+Filter::resolving(function (Filter $filter) {
+    $filter->panel();
+    $filter->expand();
+});
+
+Grid::resolving(function (Grid $grid) {
+    $grid->model()->latest('id');
+    $grid->disableViewButton();
+    $grid->showQuickEditButton();
+    $grid->enableDialogCreate();
+    $grid->disableBatchDelete();
+    $grid->actions(function (Grid\Displayers\Actions $actions) {
+        $actions->disableView();
+        $actions->disableEdit();
+    });
+    $grid->option('dialog_form_area',['70%','80%']);
+});
+
+$script = <<<JS
+      $("#grid-table > tbody > tr").on("dblclick",function() {
+         var obj = $(this).find(".feather.icon-edit");
+         if (obj.length == 1) {
+             obj.trigger("click")
+         }
+      })
+JS;
+Admin::script($script);
+
+app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));

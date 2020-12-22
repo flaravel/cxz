@@ -14,17 +14,7 @@ use App\Admin\Actions\Grid\RestoreMany;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 
-trait AdminTrait {
-	/**
-	 * 列表搜索展示为panel
-	 * @param Grid\Filter $filter
-	 * @param bool $withTrashed
-	 */
-	public function showFilterPanel(Grid\Filter $filter, $withTrashed = false) {
-		$filter->panel();
-		$filter->expand(true);
-		!$withTrashed?:$filter->scope('trashed')->onlyTrashed();
-	}
+trait RestoreTrait {
 
 	/**
 	 * 删除与恢复
@@ -33,6 +23,11 @@ trait AdminTrait {
 	 * @param string $model
 	 */
 	public function showRestore(Grid $grid, string $model) {
+
+	    $grid->filter(function (Grid\Filter $filter) {
+            $filter->scope('trashed')->onlyTrashed();
+        });
+
 		$grid->actions(function (Grid\Displayers\Actions $actions) use ($model) {
 			if (request('_scope_') == 'trashed') {
 				$actions->disableDelete();

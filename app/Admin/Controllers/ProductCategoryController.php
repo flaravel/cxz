@@ -11,14 +11,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
-use App\Traits\AdminTrait;
+use App\Traits\RestoreTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductCategoryController extends AdminController {
-    use AdminTrait;
+    use RestoreTrait;
 
 	/**
 	 * Make a grid builder.
@@ -35,7 +35,6 @@ class ProductCategoryController extends AdminController {
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
-                $this->showFilterPanel($filter,true);
 				$filter->equal('category_name')->width(3);
                 $filter->equal('on_sale')->width(3)->select(ProductCategory::$saleMap);
 			});
@@ -80,7 +79,7 @@ class ProductCategoryController extends AdminController {
 			$form->text('category_name')->required();
 			$form->image('category_image')
 				->uniqueName()
-				->maxSize(2 * 1024)
+				->maxSize(1 * 1024)
 				->autoUpload()
                 ->saveAsString()
 				->saveFullUrl();
