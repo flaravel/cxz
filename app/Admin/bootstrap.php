@@ -10,9 +10,6 @@
  * visited
  */
 
-use App\Admin\Actions\Grid\DeleteBatch;
-use App\Admin\Actions\Grid\Restore;
-use App\Admin\Actions\Grid\RestoreBatch;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid\Filter;
@@ -56,6 +53,14 @@ Grid::resolving(function (Grid $grid) {
     if (request('_scope_') == 'trashed') {
         $grid->disableCreateButton();
     }
+});
+
+Form::resolving(function (Form $form) {
+    $form->disableViewButton();
+    $form->disableDeleteButton();
+    $form->disableEditingCheck();
+    $form->disableViewCheck();
+    $form->disableCreatingCheck();
 });
 
 $script = <<<JS

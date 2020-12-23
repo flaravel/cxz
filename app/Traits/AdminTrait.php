@@ -11,7 +11,7 @@ namespace App\Traits;
 
 use App\Admin\Actions\Grid\Back;
 use App\Admin\Actions\Grid\OnSaleDownBatch;
-use App\Admin\Actions\Grid\OnSaleUpBatch;
+use App\Admin\Actions\Grid\OnSaleBatch;
 use App\Admin\Actions\Grid\Restore;
 use App\Admin\Actions\Grid\RestoreBatch;
 use App\Admin\Actions\Grid\Trashed;
@@ -35,8 +35,8 @@ trait AdminTrait {
 				$actions->append(new Restore($model));
 			}
 		});
-        $grid->tools(request('_scope_') == 'trashed' ? new Back($grid->resource()) :new Trashed($grid->resource()));
-        $grid->tools(request('_scope_') == 'trashed' ? new RestoreBatch($model) : '');
+		$grid->tools(request('_scope_') == 'trashed' ? new Trashed($grid->resource(),0) :new Trashed($grid->resource()));
+		$grid->tools(request('_scope_') == 'trashed' ? new RestoreBatch($model) : '');
 	}
 
 	/**
@@ -44,17 +44,20 @@ trait AdminTrait {
 	 *
 	 * @param Grid $grid
 	 * @param string $model
+	 * @param string $field
+	 * @param string | int $fieldValue
 	 */
-	public function showBatchOnSale(Grid $grid, string $model) {
-
-        if (request('_scope_') != 'trashed') {
-            if (request()->has('_status')) {
-                $grid->model()->where('on_sale',request()->input('_status'));
-            }
-            $grid->tools([
-                request()->input('_status') == 0 &&
-                !is_null(request()->input('_status'))  ? new OnSaleUpBatch($model) : new OnSaleDownBatch($model)
-            ]);
-        }
+	public function showBatchOnSale(Grid $grid, string $model, string $field, $fieldValue) {
+		if (request('_scope_') != 'trashed') {
+			if (request()->has('_status')) {
+				$grid->model()->where($field, request()->input('_status'));
+			} else {
+				$grid->model()->where($field, $fieldValue);
+			}
+			$grid->tools([
+				request()->input('_status') == 0 &&
+				!is_null(request()->input('_status'))  ? new OnSaleBatch($model) : new OnSaleBatch($model,0)
+			]);
+		}
 	}
 }

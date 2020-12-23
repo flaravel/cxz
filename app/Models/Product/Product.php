@@ -66,6 +66,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model {
 	use HasFactory,HasDateTimeFormatter,SoftDeletes,OnSaleTrait;
 
+
+	public static $newMap = [
+	    1 => '新品',
+	    0 => '',
+    ];
+
 	protected $casts = [
 	    'product_banner' => 'json'
     ];

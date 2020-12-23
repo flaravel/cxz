@@ -14,11 +14,9 @@ trait BatchTrait {
     protected function actionScript()
     {
         $warning = admin_trans('cxz.please_choose');
-
         return <<<JS
 function (data, target, action) {
     var key = {$this->getSelectedKeysScript()}
-
     if (key.length === 0) {
         Dcat.warning('{$warning}');
         return false;
