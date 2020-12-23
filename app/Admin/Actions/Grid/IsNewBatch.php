@@ -95,7 +95,6 @@ JS;
     protected function html()
     {
         $this->appendHtmlAttribute('class', $this->style);
-        dd($this->formatHtmlAttributes());
 
         return <<<HTML
 <div class="btn-group">
