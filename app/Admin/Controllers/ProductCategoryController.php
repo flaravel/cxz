@@ -31,35 +31,11 @@ class ProductCategoryController extends AdminController {
 			$grid->column('category_name')->tree(true);
 			$grid->column('category_image')->image('', 45, 45);
 			$grid->column('sort');
-			$grid->column('on_sale')->bool();
+			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
 
-			$grid->filter(function (Grid\Filter $filter) {
-				$filter->equal('category_name')->width(3);
-                $filter->equal('on_sale')->width(3)->select(ProductCategory::$saleMap);
-			});
-
+            $grid->quickSearch(['category_name'])->placeholder(admin_trans('cxz.please_enter_name'));
 			$this->showRestore($grid, ProductCategory::class);
-		});
-	}
-
-	/**
-	 * Make a show builder.
-	 *
-	 * @param mixed $id
-	 *
-	 * @return Show
-	 */
-	protected function detail($id) {
-		return Show::make($id, ProductCategory::with('parent'), function (Show $show) {
-			$show->field('id');
-			$show->field('category_name');
-			$show->field('category_image')->image('', 45, 45);
-			$show->field('sort');
-			$show->field('path');
-			$show->field('on_sale')->using(ProductCategory::$saleMap)->dot(ProductBrand::$dotMap);
-			$show->field('created_at');
-			$show->field('updated_at');
 		});
 	}
 

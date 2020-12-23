@@ -58,11 +58,11 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection logo_url
      * @property Grid\Column|Collection on_sale
      * @property Grid\Column|Collection deleted_at
-     * @property Grid\Column|Collection status
      * @property Grid\Column|Collection category_name
      * @property Grid\Column|Collection category_image
      * @property Grid\Column|Collection sort
      * @property Grid\Column|Collection path
+     * @property Grid\Column|Collection product_id
      * @property Grid\Column|Collection brand_id
      * @property Grid\Column|Collection category_id
      * @property Grid\Column|Collection delivery_id
@@ -72,6 +72,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection product_banner
      * @property Grid\Column|Collection price
      * @property Grid\Column|Collection market_price
+     * @property Grid\Column|Collection stock
      * @property Grid\Column|Collection sales_actual
      * @property Grid\Column|Collection sales_initial
      * @property Grid\Column|Collection content
@@ -129,11 +130,11 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection logo_url(string $label = null)
      * @method Grid\Column|Collection on_sale(string $label = null)
      * @method Grid\Column|Collection deleted_at(string $label = null)
-     * @method Grid\Column|Collection status(string $label = null)
      * @method Grid\Column|Collection category_name(string $label = null)
      * @method Grid\Column|Collection category_image(string $label = null)
      * @method Grid\Column|Collection sort(string $label = null)
      * @method Grid\Column|Collection path(string $label = null)
+     * @method Grid\Column|Collection product_id(string $label = null)
      * @method Grid\Column|Collection brand_id(string $label = null)
      * @method Grid\Column|Collection category_id(string $label = null)
      * @method Grid\Column|Collection delivery_id(string $label = null)
@@ -143,6 +144,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection product_banner(string $label = null)
      * @method Grid\Column|Collection price(string $label = null)
      * @method Grid\Column|Collection market_price(string $label = null)
+     * @method Grid\Column|Collection stock(string $label = null)
      * @method Grid\Column|Collection sales_actual(string $label = null)
      * @method Grid\Column|Collection sales_initial(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
@@ -205,11 +207,11 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection logo_url
      * @property Show\Field|Collection on_sale
      * @property Show\Field|Collection deleted_at
-     * @property Show\Field|Collection status
      * @property Show\Field|Collection category_name
      * @property Show\Field|Collection category_image
      * @property Show\Field|Collection sort
      * @property Show\Field|Collection path
+     * @property Show\Field|Collection product_id
      * @property Show\Field|Collection brand_id
      * @property Show\Field|Collection category_id
      * @property Show\Field|Collection delivery_id
@@ -219,6 +221,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection product_banner
      * @property Show\Field|Collection price
      * @property Show\Field|Collection market_price
+     * @property Show\Field|Collection stock
      * @property Show\Field|Collection sales_actual
      * @property Show\Field|Collection sales_initial
      * @property Show\Field|Collection content
@@ -276,11 +279,11 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection logo_url(string $label = null)
      * @method Show\Field|Collection on_sale(string $label = null)
      * @method Show\Field|Collection deleted_at(string $label = null)
-     * @method Show\Field|Collection status(string $label = null)
      * @method Show\Field|Collection category_name(string $label = null)
      * @method Show\Field|Collection category_image(string $label = null)
      * @method Show\Field|Collection sort(string $label = null)
      * @method Show\Field|Collection path(string $label = null)
+     * @method Show\Field|Collection product_id(string $label = null)
      * @method Show\Field|Collection brand_id(string $label = null)
      * @method Show\Field|Collection category_id(string $label = null)
      * @method Show\Field|Collection delivery_id(string $label = null)
@@ -290,6 +293,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection product_banner(string $label = null)
      * @method Show\Field|Collection price(string $label = null)
      * @method Show\Field|Collection market_price(string $label = null)
+     * @method Show\Field|Collection stock(string $label = null)
      * @method Show\Field|Collection sales_actual(string $label = null)
      * @method Show\Field|Collection sales_initial(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
@@ -303,7 +307,7 @@ namespace Dcat\Admin {
     class Show {}
 
     /**
-     
+
      */
     class Form {}
 
@@ -311,19 +315,14 @@ namespace Dcat\Admin {
 
 namespace Dcat\Admin\Grid {
     /**
-     
+
      */
     class Column {}
-
-    /**
-     
-     */
-    class Filter {}
 }
 
 namespace Dcat\Admin\Show {
     /**
-     
+
      */
     class Field {}
 }

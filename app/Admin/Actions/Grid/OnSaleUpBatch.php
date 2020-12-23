@@ -9,18 +9,22 @@
 
 namespace App\Admin\Actions\Grid;
 
+use App\Traits\BatchTrait;
 use Dcat\Admin\Actions\Response;
-use Dcat\Admin\Grid\BatchAction;
+use Dcat\Admin\Form\AbstractTool;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class OnSaleUpBatch extends BatchAction {
+class OnSaleUpBatch extends AbstractTool {
+    use BatchTrait;
 	/**
 	 * @var string
 	 */
 	protected $model;
+
+    protected $style = 'btn btn-primary';
 
 	public function __construct(string $model = null) {
 		$title       = admin_trans('cxz.on_sale_up');

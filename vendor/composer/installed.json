@@ -271,6 +271,83 @@
         }
     },
     {
+        "name": "box/spout",
+        "version": "v3.1.0",
+        "version_normalized": "3.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/box/spout.git",
+            "reference": "7964dadc2128f3a00ffa393395b618ea115c8032"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/box/spout/zipball/7964dadc2128f3a00ffa393395b618ea115c8032",
+            "reference": "7964dadc2128f3a00ffa393395b618ea115c8032",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "ext-xmlreader": "*",
+            "ext-zip": "*",
+            "php": ">=7.1.0"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2",
+            "phpunit/phpunit": "^7"
+        },
+        "suggest": {
+            "ext-iconv": "To handle non UTF-8 CSV files (if \"php-intl\" is not already installed or is too limited)",
+            "ext-intl": "To handle non UTF-8 CSV files (if \"iconv\" is not already installed)"
+        },
+        "time": "2019-12-02T21:21:41+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Box\\Spout\\": "src/Spout"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Adrien Loison",
+                "email": "adrien@box.com"
+            }
+        ],
+        "description": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
+        "homepage": "https://www.github.com/box/spout",
+        "keywords": [
+            "OOXML",
+            "csv",
+            "excel",
+            "memory",
+            "odf",
+            "ods",
+            "office",
+            "open",
+            "php",
+            "read",
+            "scale",
+            "spreadsheet",
+            "stream",
+            "write",
+            "xlsx"
+        ]
+    },
+    {
         "name": "brick/math",
         "version": "0.9.1",
         "version_normalized": "0.9.1.0",
@@ -770,6 +847,69 @@
         ]
     },
     {
+        "name": "dcat/easy-excel",
+        "version": "1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jqhph/easy-excel.git",
+            "reference": "da0565ae0a31b306947222c4e014054a7172e4c4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jqhph/easy-excel/zipball/da0565ae0a31b306947222c4e014054a7172e4c4",
+            "reference": "da0565ae0a31b306947222c4e014054a7172e4c4",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "box/spout": "~3",
+            "league/flysystem": "~1|~2",
+            "php": ">=7.1.0"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2",
+            "phpunit/phpunit": "~7|~8.0"
+        },
+        "time": "2020-12-14T07:32:36+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Dcat\\EasyExcel\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "jqh",
+                "email": "841324345@qq.com"
+            }
+        ],
+        "description": "使用简单实用的语义化接口快速读写Excel文件",
+        "homepage": "https://github.com/jqhph/easy-excel",
+        "keywords": [
+            "box spout",
+            "csv",
+            "easy excel",
+            "excel",
+            "ods",
+            "office",
+            "read",
+            "spreadsheet",
+            "stream",
+            "xlsx"
+        ]
+    },
+    {
         "name": "dcat/laravel-admin",
         "version": "2.0.11-beta",
         "version_normalized": "2.0.11.0-beta",
@@ -846,6 +986,70 @@
             "issues": "https://github.com/jqhph/dcat-admin/issues",
             "source": "https://github.com/jqhph/dcat-admin/tree/2.0.11-beta"
         }
+    },
+    {
+        "name": "dcat/laravel-wherehasin",
+        "version": "0.5.0",
+        "version_normalized": "0.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jqhph/laravel-wherehasin.git",
+            "reference": "69236acc77a38c5e7abe06a3734f0667e2a89ac2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jqhph/laravel-wherehasin/zipball/69236acc77a38c5e7abe06a3734f0667e2a89ac2",
+            "reference": "69236acc77a38c5e7abe06a3734f0667e2a89ac2",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.0"
+        },
+        "require-dev": {
+            "fzaninotto/faker": "^1.4",
+            "laravel/laravel": ">=5.5",
+            "mockery/mockery": "^1.0",
+            "phpunit/phpunit": "^7.5"
+        },
+        "time": "2020-09-28T03:09:55+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Dcat\\Laravel\\Database\\WhereHasInServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Dcat\\Laravel\\Database\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "jqh",
+                "email": "841324345@qq.com"
+            }
+        ],
+        "description": "Laravel ORM whereHasIn",
+        "homepage": "https://github.com/jqhph/dcat-admin",
+        "keywords": [
+            "laravel",
+            "orm",
+            "relation",
+            "whereHas"
+        ]
     },
     {
         "name": "defuse/php-encryption",

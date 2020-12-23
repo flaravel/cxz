@@ -10,6 +10,7 @@
  * visited
  */
 
+use App\Admin\Actions\Grid\DeleteBatch;
 use App\Admin\Actions\Grid\Restore;
 use App\Admin\Actions\Grid\RestoreBatch;
 use Dcat\Admin\Admin;
@@ -44,13 +45,15 @@ Grid::resolving(function (Grid $grid) {
     $grid->disableViewButton();
     $grid->showQuickEditButton();
     $grid->enableDialogCreate();
-    $grid->disableBatchDelete();
     $grid->actions(function (Grid\Displayers\Actions $actions) {
         $actions->disableView();
         $actions->disableEdit();
     });
     $grid->option('dialog_form_area',['70%','80%']);
     $grid->toolsWithOutline(false);
+    if (request('_scope_') == 'trashed') {
+        $grid->disableCreateButton();
+    }
 });
 
 $script = <<<JS

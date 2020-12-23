@@ -9,15 +9,16 @@
 
 namespace App\Admin\Actions\Grid;
 
+use App\Traits\BatchTrait;
 use Dcat\Admin\Actions\Response;
 use Dcat\Admin\Form\AbstractTool;
-use Dcat\Admin\Grid\BatchAction;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class OnSaleDownBatch extends AbstractTool {
+    use BatchTrait;
 	/**
 	 * @var string
 	 */
@@ -75,31 +76,4 @@ class OnSaleDownBatch extends AbstractTool {
 			'model' => $this->model,
 		];
 	}
-
-    protected function actionScript()
-    {
-        $warning = admin_trans('cxz.please_choose');
-
-        return <<<JS
-function (data, target, action) {
-    var key = {$this->getSelectedKeysScript()}
-
-    if (key.length === 0) {
-        Dcat.warning('{$warning}');
-        return false;
-    }
-
-    // 设置主键为复选框选中的行ID数组
-    action.options.key = key;
-}
-JS;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSelectedKeysScript()
-    {
-        return "Dcat.grid.selected();";
-    }
 }

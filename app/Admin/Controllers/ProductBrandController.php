@@ -30,33 +30,10 @@ class ProductBrandController extends AdminController {
             $grid->column('logo_url')->image('',45,45);
             $grid->column('brand_name');
 			$grid->column('desc')->limit(30);
-			$grid->column('on_sale')->bool();
+			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
-
-			$grid->filter(function (Grid\Filter $filter) {
-				$filter->equal('brand_name')->width(3);
-				$filter->equal('on_sale')->select(ProductBrand::$saleMap)->width(3);
-			});
+			$grid->quickSearch(['brand_name'])->placeholder(admin_trans('cxz.please_enter_name'));
             $this->showRestore($grid, ProductBrand::class);
-		});
-	}
-
-	/**
-	 * Make a show builder.
-	 *
-	 * @param mixed $id
-	 *
-	 * @return Show
-	 */
-	protected function detail($id) {
-		return Show::make($id, new ProductBrand(), function (Show $show) {
-			$show->field('id');
-			$show->field('brand_name');
-			$show->field('desc');
-			$show->field('logo_url')->image('',45,45);
-			$show->field('on_sale')->using(ProductBrand::$saleMap)->dot(ProductBrand::$dotMap);;
-			$show->field('created_at');
-			$show->field('updated_at');
 		});
 	}
 

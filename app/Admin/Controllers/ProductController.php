@@ -9,6 +9,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\IsNewBatch;
+use App\Admin\Pages\Status;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
@@ -16,7 +18,6 @@ use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
-use Dcat\Admin\Widgets\Tab;
 
 class ProductController extends AdminController {
 	use AdminTrait;
@@ -34,13 +35,13 @@ class ProductController extends AdminController {
 			$grid->column('price');
 			$grid->column('market_price');
 			$grid->column('on_sale')->switch();
-			$grid->column('sort');
 			$grid->column('sales', admin_trans('product.fields.sales'))->display(function () {
 				/**@var $product Product*/
 				$product = $this;
 				return $product->sales_initial + $product->sales_actual;
 			});
-			$grid->column('created_at');
+            $grid->column('sort')->editable();
+            $grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
 				$tree = collect(ProductCategory::selectOptions())->forget(0);
@@ -57,16 +58,13 @@ class ProductController extends AdminController {
 					$query->whereIn('category_id', $categoryId);
 				})->width(3)->select($tree);
 			});
-            $grid->header(function ($collection) {
-                $tab = Tab::make();
-                $tab->noPadding();
-                $tab->addLink('出售中','',true);
-                $tab->addLink('已下架','');
-                $tab->addLink('回收站','');
-                return $tab;
+
+			$grid->header(function () use ($grid) {
+			    return (new Status())->status(Product::$saleMap)->default(Product::ON_SALE());
             });
-			$this->showRestore($grid, Product::class);
+            $this->showRestore($grid, Product::class);
 			$this->showBatchOnSale($grid,Product::class);
+			$grid->tools(new IsNewBatch(Product::class));
         });
 	}
 
@@ -88,9 +86,11 @@ class ProductController extends AdminController {
                 });
                 $form->text('product_name')->required();
                 $form->textarea('selling_point');
-                $form->decimal('price')->required();
+                $form->decimal('price')->default(0);
                 $form->decimal('market_price')->default(0);
-                $form->switch('on_sale')->required();
+                $form->switch('on_sale');
+                $form->switch('is_recommend')->help(admin_trans('cxz.goods.is_recommend_help'));
+                $form->switch('is_new')->help(admin_trans('cxz.goods.is_new_help'));
                 $form->number('sort')->min(0)->max(9999999)->help(admin_trans('cxz.goods_sort_help'))->default(0);
                 $form->number('sales_initial')->min(0)->max(9999999)->help(admin_trans('cxz.goods_sales_help'))->default(0);
                 $form->number('stock')->min(0)->help(admin_trans('cxz.goods_stock_help'));
@@ -106,11 +106,12 @@ class ProductController extends AdminController {
                     ->uniqueName()
                     ->autoUpload()
                     ->saveFullUrl()
+                    ->options()
                     ->required()
                     ->limit(5)
                     ->maxSize(1 * 1024)
                     ->help(admin_trans('cxz.goods.more_image_max'));
-                $form->editor('content');
+                $form->editor('content')->required();
             })->tab(admin_trans('cxz.goods.attributes'),function (Form $form) {
                 $form->hasMany('properties','',function (Form\NestedForm $form) {
                     $form->text('name');

@@ -21,12 +21,7 @@ trait OnSaleTrait {
 	}
 
 	public static $saleMap = [
-		0 => '已下架',
-		1 => '已上架',
+        1 => '已上架',
+		0 => '已下架'
 	];
-
-	public static $dotMap = [
-	    0 => 'red',
-	    1 => 'green'
-    ];
 }

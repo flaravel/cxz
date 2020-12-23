@@ -31,6 +31,8 @@ return [
 		'content'        => '产品详情',
 		'stock'        => '库存',
 		'value'        => '属性值',
+		'is_recommend'        => '是否推荐',
+		'is_new'        => '是否新品',
 	],
 	'options' => [
 	],
