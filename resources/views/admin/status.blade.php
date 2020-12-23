@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" style="margin-top: 20px">
     <div class="card-body">
         <ul class="nav nav-pills">
             @foreach($status as $key => $value)

@@ -4,6 +4,7 @@ namespace App\Admin\Actions\Grid;
 
 use App\Traits\BatchTrait;
 use Dcat\Admin\Actions\Response;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Tools\AbstractTool;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -16,8 +17,6 @@ class IsNewBatch extends AbstractTool
     /**
      * @return string
      */
-    protected $style = 'btn btn-primary';
-
     protected $model;
 
     public function __construct(string $model = null) {
@@ -74,5 +73,40 @@ class IsNewBatch extends AbstractTool
         return [
             'model' => $this->model,
         ];
+    }
+
+    protected function script()
+    {
+        $script = <<<JS
+
+    $("#set_new").on("click",function() {
+         var obj = $(this);
+         console.log(1)
+    })
+
+    $("#cancel_new").on("click",function() {
+         var obj = $(this);
+
+    })
+JS;
+        Admin::script($script);
+    }
+
+    protected function html()
+    {
+        $this->appendHtmlAttribute('class', $this->style);
+        dd($this->formatHtmlAttributes());
+
+        return <<<HTML
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+       {$this->title()}
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item " href="#">设为新品</a>
+      <a class="dropdown-item" id="cancel_new" href="#">取消新品</a>
+    </div>
+  </div>
+HTML;
     }
 }

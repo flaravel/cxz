@@ -30,7 +30,12 @@ class ProductController extends AdminController {
 		return Grid::make(Product::with('category'), function (Grid $grid) {
 			$grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
-			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
+			$grid->column('category_id', admin_trans('product.fields.category_id'))->display(function ($id) {
+			    $category = ProductCategory::query()->find($id);
+			    $ids = explode('-',$category->path);
+			    $pcategory = ProductCategory::query()->whereIn('id',$ids)->get(['category_name'])->pluck('category_name')->implode('/');
+			    return $pcategory.'/'."<a href='#'>{$category->category_name}</a>";
+            });
 			$grid->column('product_name')->copyable()->bold();
 			$grid->column('price');
 			$grid->column('market_price');
@@ -62,9 +67,10 @@ class ProductController extends AdminController {
 			$grid->header(function () use ($grid) {
 			    return (new Status())->status(Product::$saleMap)->default(Product::ON_SALE());
             });
+
             $this->showRestore($grid, Product::class);
 			$this->showBatchOnSale($grid,Product::class);
-			$grid->tools(new IsNewBatch(Product::class));
+			$grid->tools(request('_scope_') == 'trashed' ? '':new IsNewBatch(Product::class));
         });
 	}
 
@@ -85,7 +91,7 @@ class ProductController extends AdminController {
                     return is_null($brandId) ? 0 : $brandId;
                 });
                 $form->text('product_name')->required();
-                $form->textarea('selling_point');
+                $form->textarea('selling_point')->saveAsString();
                 $form->decimal('price')->default(0);
                 $form->decimal('market_price')->default(0);
                 $form->switch('on_sale');
@@ -120,7 +126,6 @@ class ProductController extends AdminController {
             })->tab(admin_trans('cxz.goods.skus'),function (Form $form) {
 
             });
-			$form->disableViewButton();
 		});
 	}
 }

@@ -9,16 +9,18 @@
 
 namespace App\Admin\Actions\Grid;
 
+use App\Traits\BatchTrait;
 use Dcat\Admin\Actions\Response;
-use Dcat\Admin\Grid\BatchAction;
+use Dcat\Admin\Grid\Tools\AbstractTool;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class RestoreBatch extends BatchAction {
+class RestoreBatch extends AbstractTool {
+    use BatchTrait;
 	public $model;
-
+    protected $style = 'btn btn-success';
 	public function __construct(string  $model = null) {
 		$title       = admin_trans('cxz.restore');
 		$this->model = $model;

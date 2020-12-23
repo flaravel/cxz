@@ -35,12 +35,8 @@ trait AdminTrait {
 				$actions->append(new Restore($model));
 			}
 		});
-        $grid->batchActions(function (Grid\Tools\BatchActions $batch) use ($model) {
-            if (request('_scope_') == 'trashed') {
-                $batch->disableDelete();
-                $batch->add(new RestoreBatch($model));
-            }
-        });
+        $grid->tools(request('_scope_') == 'trashed' ? new Back($grid->resource()) :new Trashed($grid->resource()));
+        $grid->tools(request('_scope_') == 'trashed' ? new RestoreBatch($model) : '');
 	}
 
 	/**
