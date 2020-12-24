@@ -26,7 +26,7 @@ trait AdminTrait {
 	public function showRestore(Grid $grid) {
         $model = get_class($grid->model()->repository()->model());
 		$grid->filter(function (Grid\Filter $filter) {
-			$filter->scope('trashed')->onlyTrashed();
+			$filter->scope('trashed')->latest('updated_at')->onlyTrashed();
 		});
 		$grid->actions(function (Grid\Displayers\Actions $actions) use ($model) {
 			if (request('_scope_') == 'trashed') {
