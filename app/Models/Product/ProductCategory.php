@@ -9,7 +9,6 @@
 
 namespace App\Models\Product;
 
-use App\Traits\OnSaleTrait;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Dcat\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,7 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read ProductCategory $parent
  */
 class ProductCategory extends Model {
-	use HasFactory,HasDateTimeFormatter,OnSaleTrait,SoftDeletes,ModelTree;
+	use HasFactory,HasDateTimeFormatter,SoftDeletes,ModelTree;
 
     protected $titleColumn = 'category_name';
 

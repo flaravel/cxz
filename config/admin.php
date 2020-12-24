@@ -278,19 +278,19 @@ return [
     */
     'layout' => [
         // default, blue, blue-light, green
-        'color' => 'blue',
+        'color' => 'default',
 
-        'body_class' => '',
+        'body_class' => 'sidebar-separate',
 
         'sidebar_collapsed' => false,
 
         // light, primary, dark
-        'sidebar_style' => 'dark',
+        'sidebar_style' => '',
 
         'dark_mode_switch' => true,
 
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
-        'navbar_color' => 'bg-dark',
+        'navbar_color' => '',
     ],
 
     /*
@@ -308,7 +308,7 @@ return [
     |
     | Whether enable default breadcrumb for every page content.
     */
-    'enable_default_breadcrumb' => true,
+    'enable_default_breadcrumb' => false,
 
     /*
     |--------------------------------------------------------------------------

@@ -9,7 +9,6 @@
 
 namespace App\Models\Product;
 
-use App\Traits\OnSaleTrait;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|ProductBrand withoutTrashed()
  */
 class ProductBrand extends Model {
-	use HasFactory,HasDateTimeFormatter,SoftDeletes,OnSaleTrait;
+	use HasFactory,HasDateTimeFormatter,SoftDeletes;
 
 	protected $fillable = [
 		'brand_name', 'desc', 'logo_url', 'on_sale'

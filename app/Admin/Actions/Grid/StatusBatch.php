@@ -18,7 +18,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class IsNewBatch extends AbstractTool {
+class StatusBatch extends AbstractTool {
 	use BatchTrait;
 
     /**
@@ -28,8 +28,13 @@ class IsNewBatch extends AbstractTool {
 
 	protected $style = 'dropdown-item';
 
-	public function __construct(string $model = null) {
-		$title       = admin_trans('cxz.new');
+	protected $field;
+
+	protected $textArray;
+
+	public function __construct(string $title = null,string $model = null,string $field = null,array $textArray = null) {
+		$this->field = $field;
+		$this->textArray = $textArray;
 		parent::__construct("<i class='feather icon-star'> {$title}</i>");
 		$this->model = $model;
 	}
@@ -47,7 +52,8 @@ class IsNewBatch extends AbstractTool {
             return $this->response()->warning(admin_trans('cxz.please_choose'))->refresh();
         }
         $model = $request->get('model');
-        if ($model::query()->whereIn('id', $keys)->update(['is_new' =>  $request->input('is_new')])) {
+        $field = $request->get('field');
+        if ($model::query()->whereIn('id', $keys)->update([$field =>  $request->input('is_new')])) {
             return $this->response()->success(admin_trans('cxz.action_success'))->refresh();
         } else {
             return $this->response()->error(admin_trans('cxz.action_error'))->refresh();
@@ -69,6 +75,7 @@ class IsNewBatch extends AbstractTool {
 	protected function parameters() {
 		return [
 			'model' => $this->model,
+			'field' => $this->field,
 		];
 	}
 
@@ -91,17 +98,18 @@ JS;
     }
 
 	protected function html() {
-        $this->appendHtmlAttribute('class', $this->style);
 		return <<<HTML
-<div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-       {$this->title()}
+<div class="btn-group dropdown" style="margin-right:3px">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <span class="d-none d-sm-inline">&nbsp;{$this->title()}&nbsp;</span>
+        <span class="caret"></span>
+        <span class="sr-only"></span>
     </button>
-    <div class="dropdown-menu">
-      <a {$this->formatHtmlAttributes()} data-new="1" href="javascript:void(0)">设为新品</a>
-      <a {$this->formatHtmlAttributes()} data-new="0" href="javascript:void(0)">取消新品</a>
-    </div>
-  </div>
+    <ul class="dropdown-menu" role="menu">
+        <li class='dropdown-item'><a {$this->formatHtmlAttributes()} data-new="1" href="javascript:void(0)">设为新品</a></li>
+       <li class='dropdown-item'><a {$this->formatHtmlAttributes()} data-new="0" href="javascript:void(0)">取消新品</a></li>
+    </ul>
+</div>
 HTML;
 	}
 }

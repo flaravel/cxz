@@ -9,8 +9,6 @@
 
 namespace App\Admin\Actions\Grid;
 
-use App\Models\Product\Product;
-use App\Models\Product\ProductBrand;
 use Dcat\Admin\Actions\Response;
 use Dcat\Admin\Grid\Tools\AbstractTool;
 use Dcat\Admin\Traits\HasPermissions;

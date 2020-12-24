@@ -49,7 +49,7 @@ class OnSaleBatch extends AbstractTool {
             return $this->response()->warning(admin_trans('cxz.please_choose'))->refresh();
         }
 		$model = $request->input('model');
-        $status = $request->input('type') ? $model::ON_SALE() : $model::DOWN_SALE();
+        $status = $request->input('type') ? UP_SALE : DOWN_SALE;
 		if ($model::query()->whereIn('id', $keys)->update(['on_sale' => $status])) {
 			return $this->response()->success(admin_trans('cxz.action_success'))->refresh();
 		} else {

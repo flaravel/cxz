@@ -23,7 +23,6 @@ return array(
     'App\\Admin\\Metrics\\Examples\\Sessions' => $baseDir . '/app/Admin/Metrics/Examples/Sessions.php',
     'App\\Admin\\Metrics\\Examples\\Tickets' => $baseDir . '/app/Admin/Metrics/Examples/Tickets.php',
     'App\\Admin\\Metrics\\Examples\\TotalUsers' => $baseDir . '/app/Admin/Metrics/Examples/TotalUsers.php',
-    'App\\Admin\\Pages\\Status' => $baseDir . '/app/Admin/Pages/Status.php',
     'App\\Console\\Commands\\Test' => $baseDir . '/app/Console/Commands/Test.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',

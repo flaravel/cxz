@@ -9,8 +9,6 @@
 
 namespace App\Models\Product;
 
-use App\Models\ProductProperties;
-use App\Traits\OnSaleTrait;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -65,13 +63,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
  */
 class Product extends Model {
-	use HasFactory,HasDateTimeFormatter,SoftDeletes,OnSaleTrait;
-
-
-	public static $newMap = [
-	    1 => '新品',
-	    0 => '',
-    ];
+	use HasFactory,HasDateTimeFormatter,SoftDeletes;
 
 	protected $casts = [
 	    'product_banner' => 'json'
