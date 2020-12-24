@@ -64,11 +64,13 @@ trait AdminTrait {
      * @param $model
      */
 	public function showOnSaleButton(Grid $grid) {
-	    $model = get_class($grid->model()->repository()->model());
-        $grid->tools([
-            !request()->input('_status') &&
-            !is_null(request()->input('_status'))  ? new OnSaleBatch($model) : new OnSaleBatch($model,0)
-        ]);
+        if (request('_scope_') != 'trashed') {
+            $model = get_class($grid->model()->repository()->model());
+            $grid->tools([
+                !request()->input('_status') &&
+                !is_null(request()->input('_status'))  ? new OnSaleBatch($model) : new OnSaleBatch($model,0)
+            ]);
+        }
     }
 
     /**
