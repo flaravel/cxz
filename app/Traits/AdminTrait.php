@@ -50,7 +50,7 @@ trait AdminTrait {
 	public function showStatusFilter(Grid $grid,string $field, $fieldValue) {
 		if (request('_scope_') != 'trashed') {
 			if (request()->has('_status')) {
-				$grid->model()->where($field, request()->input('_status'));
+				$grid->model()->orderByDesc('updated_at')->where($field, request()->input('_status'));
 			} else {
 				$grid->model()->where($field, $fieldValue);
 			}
