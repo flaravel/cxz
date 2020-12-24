@@ -26,7 +26,7 @@ trait AdminTrait {
 	public function showRestore(Grid $grid) {
         $model = get_class($grid->model()->repository()->model());
 		$grid->filter(function (Grid\Filter $filter) {
-			$filter->scope('trashed')->latest('updated_at')->onlyTrashed();
+			$filter->scope('trashed')->onlyTrashed();
 		});
 		$grid->actions(function (Grid\Displayers\Actions $actions) use ($model) {
 			if (request('_scope_') == 'trashed') {
@@ -35,7 +35,7 @@ trait AdminTrait {
 				$actions->append(new Restore($model));
 			}
 		});
-		$grid->tools(request('_scope_') == 'trashed' ? new Trashed($grid->resource(),0) :new Trashed($grid->resource()));
+		$grid->tools(request('_scope_') == 'trashed' ? new Trashed($grid->resource(),0,$model) :new Trashed($grid->resource(),1,$model));
 		$grid->tools(request('_scope_') == 'trashed' ? new RestoreBatch($model) : '');
 	}
 
@@ -50,7 +50,7 @@ trait AdminTrait {
 	public function showStatusFilter(Grid $grid,string $field, $fieldValue) {
 		if (request('_scope_') != 'trashed') {
 			if (request()->has('_status')) {
-				$grid->model()->orderByDesc('updated_at')->where($field, request()->input('_status'));
+				$grid->model()->where($field, request()->input('_status'));
 			} else {
 				$grid->model()->where($field, $fieldValue);
 			}
@@ -80,7 +80,7 @@ trait AdminTrait {
      * @param int $default  默认选中
      * @return Tab
      */
-	public function showStatusTab(array $status,int $default = 1) {
+	public function showStatusTab(array $status,int $default = 1, Grid $grid = null,string $field = null) {
         $tab = Tab::make()->withCard();
         $tab->setHtmlAttribute('style','margin-top:20px');
         $script = <<<JS
@@ -93,7 +93,20 @@ JS;
             } else {
                 $status = $key == $default;
             }
-            $tab->addLink($value,url(request()->fullUrlWithQuery(['_status' => $key])),$status);
+            if (!is_null($grid) && !is_null($field)) {
+                $query = get_class($grid->model()->repository()->model())::query();
+                $grid->model()->getQueries()->unique()->each(function ($value) use (&$query,$field,$key) {
+                    if (in_array($value['method'], ['paginate', 'get', 'orderBy', 'orderByDesc','latest'], true)) {
+                        return;
+                    }
+                    if ($value['method'] == 'where' && in_array($field,$value['arguments'])) {
+                        $value['arguments'][1] = $key;
+                    }
+                    $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
+                });
+                $count = $query->count();
+            }
+            $tab->addLink(isset($count) ? $value."($count)" : $value,url(request()->fullUrlWithQuery(['_status' => $key])),$status);
         }
         return $tab;
     }

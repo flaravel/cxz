@@ -31,12 +31,7 @@ class ProductController extends AdminController {
 		return Grid::make(Product::with('category'), function (Grid $grid) {
 			$grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
-			$grid->column('category_id', admin_trans('product.fields.category_id'))->display(function ($id) {
-				$category = ProductCategory::query()->find($id);
-				$ids = explode('-', $category->path);
-				$pcategory = ProductCategory::query()->whereIn('id', $ids)->get(['category_name'])->pluck('category_name')->implode('/');
-				return $pcategory.'/'."<a href='#'>{$category->category_name}</a>";
-			});
+			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
 			$grid->column('product_name')->append(function () {
 			    $new = Product::$newMap[$this->is_new];
 			    return "<span class='badge badge-primary'>{$new}</span>";
@@ -69,9 +64,9 @@ class ProductController extends AdminController {
 
             // 状态查询和快捷状态TAB一起使用
             $this->showStatusFilter($grid,'on_sale', Product::ON_SALE());
-			$grid->header(function () {
+			$grid->header(function () use ($grid) {
                 //快捷状态TAB
-                return $this->showStatusTab([1 => '出售中', 0 => '已下架']);
+                return $this->showStatusTab([1 => '出售中', 0 => '已下架'],Product::ON_SALE(),$grid,'on_sale');
 			});
 
 			// 恢复按钮

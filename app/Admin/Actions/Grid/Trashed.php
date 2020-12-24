@@ -9,6 +9,8 @@
 
 namespace App\Admin\Actions\Grid;
 
+use App\Models\Product\Product;
+use App\Models\Product\ProductBrand;
 use Dcat\Admin\Actions\Response;
 use Dcat\Admin\Grid\Tools\AbstractTool;
 use Dcat\Admin\Traits\HasPermissions;
@@ -26,11 +28,13 @@ class Trashed extends AbstractTool {
 
 	protected $type;  // 1回收站 0 返回
 
-	public function __construct(string  $resource = null,int $type = 1) {
+	public function __construct(string  $resource = null,int $type = 1,string $model) {
 		$title          = $type ? admin_trans('cxz.trashed') : admin_trans('cxz.back');
         $icon           = $type ? 'icon-trash-2' : 'icon-repeat';
 		$this->resource = $resource;
 		$this->type = $type;
+        $count = $model::query()->onlyTrashed()->count();
+        $title = $count > 0 ? $title."({$count})" : $title;
 		parent::__construct("<i class='feather {$icon}'> {$title}</i>");
 	}
 	/**
