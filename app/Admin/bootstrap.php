@@ -42,6 +42,7 @@ Grid::resolving(function (Grid $grid) {
     $grid->disableViewButton();
     $grid->showQuickEditButton();
     $grid->enableDialogCreate();
+    $grid->disableRefreshButton();
     $grid->disableFilterButton();
     $grid->disableBatchActions();
     $grid->actions(function (Grid\Displayers\Actions $actions) {

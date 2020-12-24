@@ -9,14 +9,11 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Grid\IsNewBatch;
-use App\Admin\Actions\Grid\StatusBatch;
+use App\Admin\Extensions\Tools;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
 use App\Traits\AdminTrait;
-use Composer\XdebugHandler\Status;
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
@@ -32,16 +29,18 @@ class ProductController extends AdminController {
 		return Grid::make(Product::with(['category','brand']), function (Grid $grid) {
 			$grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
-            $grid->column('product_name')->append(function () {
-                $new = PRODUCT_NEW_MAP[$this->is_new] ?? '';
-                return "<span class='badge badge-primary'>{$new}</span>";
-            });
+			$grid->column('product_name')->append(function () {
+				$new = PRODUCT_NEW_MAP[$this->is_new] ?? '';
+				$recommend = PRODUCT_RECOMMEND_MAP[$this->is_recommend] ?? '';
+				return "<span class='badge badge-primary'>{$new}</span><span class='badge badge-danger'>{$recommend}</span>";
+			});
 			$grid->column('category.category_name', admin_trans('product.fields.category_id'));
 			$grid->column('brand.brand_name', admin_trans('product.fields.brand_id'))->hide();
 			$grid->column('price');
 			$grid->column('market_price');
 			$grid->column('on_sale')->bool()->hide();
-            $grid->column('stock');
+			$grid->column('is_recommend')->bool()->hide();
+			$grid->column('stock');
 			$grid->column('sales', admin_trans('product.fields.sales'))->display(function () {
 				/**@var $product Product*/
 				$product = $this;
@@ -51,7 +50,7 @@ class ProductController extends AdminController {
 			$grid->column('created_at');
 
 			$grid->filter(function (Grid\Filter $filter) {
-                $filter->withoutInputBorder();
+				$filter->withoutInputBorder();
 				$tree = collect(ProductCategory::selectOptions())->forget(0);
 				$filter->like('product_name')->width(3);
 				$filter->where('category_id', function ($query) {
@@ -65,36 +64,35 @@ class ProductController extends AdminController {
 						->toArray();
 					$query->whereIn('category_id', $categoryId);
 				})->width(3)->select($tree);
-                $filter->group('price', function (Grid\Filter\Group $group) {
-                    $group->gt('大于');
-                    $group->lt('小于');
-                    $group->equal('等于');
-                })->width(3);
+				$filter->group('price', function (Grid\Filter\Group $group) {
+					$group->gt('大于');
+					$group->lt('小于');
+					$group->equal('等于');
+				})->width(3);
 			});
 
-            // 状态查询和快捷状态TAB一起使用
-            $this->showStatusFilter($grid,'on_sale', UP_SALE);
+			// 状态查询和快捷状态TAB一起使用
+			$this->showStatusFilter($grid, 'on_sale', UP_SALE);
 			$grid->header(function () use ($grid) {
-                //快捷状态TAB
-                return $this->showStatusTab([1 => '出售中', 0 => '已下架'],UP_SALE,$grid,'on_sale');
+				//快捷状态TAB 筛选
+				return $this->showStatusTab([1 => '出售中', 0 => '已下架'], UP_SALE, $grid, 'on_sale');
 			});
 
-			// 恢复按钮
-			$this->showRestore($grid);
 			// 上下架按钮
 			$this->showOnSaleButton($grid);
-            // 是否上新按钮
-			$grid->tools([
-                request('_scope_') == 'trashed' ? '':new StatusBatch(admin_trans('cxz.new'),Product::class,'is_new'),
-                request('_scope_') == 'trashed' ? '':new StatusBatch(
-                    admin_trans('cxz.recommend'),
-                    Product::class,
-                    'is_recommend',
-                    [admin_trans('cxz.set_new'),admin_trans('cxz.cancel_new')]
-                ),
-            ]);
+
+			// 状态批量操作按钮
+			if (request('_scope_') != 'trashed') {
+				$grid->tools([
+					Tools::getProductNew(),
+					Tools::getProductRecommend()
+				]);
+			}
+
+            // 恢复按钮
+            $this->showRestore($grid);
+
 			$grid->showColumnSelector();
-			$grid->export()->chunkSize(100);
 		});
 	}
 

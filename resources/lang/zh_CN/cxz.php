@@ -19,10 +19,6 @@ return [
 	'goods_stock_help'            => '多规格商品将自动求和所有规格的库存做为实际库存',
 	'on_sale_up'                  => '上架',
 	'on_sale_down'                => '下架',
-	'new'                         => '新品',
-	'set_new'                     => '设为新品',
-	'cancel_new'                  => '取消新品',
-	'recommend'                   => '推荐',
 	'trashed'                     => '回收站',
 	'back'                        => '返回',
 	'delete'                      => '删除',
@@ -34,12 +30,22 @@ return [
 	'action_error'                => '操作失败',
 	'please_choose'               => '请先选择操作项！',
 	'goods'                       => [
-		'setting'          => '基础设置',
-		'resource'         => '资源设置',
-		'attributes'       => '属性设置',
-		'more_image_max'   => '允许最大上传5张图片',
-		'skus'             => 'SKU设置',
-		'is_new_help'             => '上新专区展示',
-		'is_recommend_help'             => '推荐到首页展示',
+		'setting'                     => '基础设置',
+		'resource'                    => '资源设置',
+		'attributes'                  => '属性设置',
+		'more_image_max'              => '允许最大上传5张图片',
+		'skus'                        => 'SKU设置',
+		'is_new_help'                 => '上新专区展示',
+		'is_recommend_help'           => '推荐到首页展示',
+		'new'                         => '新品',
+		'recommend'                   => '推荐',
+        'new_data'                    => [
+            'set_new'                     => '设为新品',
+            'cancel_new'                  => '取消新品',
+        ],
+        'recommend_data'              => [
+            'set_recommend'                     => '设为主页推荐',
+            'cancel_recommend'                  => '取消主页推荐',
+        ]
 	]
 ];

@@ -8,9 +8,16 @@ const SALE_MAP = [
     DOWN_SALE => '已下架',
 ];
 
-// 产品新品常量
+// 商品新品常量
 const PRODUCT_NEW = 1;
 const PRODUCT_NOT_NEW = 0;
 const PRODUCT_NEW_MAP = [
     PRODUCT_NEW => '新品',
+];
+
+// 商品推荐常量
+const PRODUCT_RECOMMEND = 1;
+const PRODUCT_NOT_RECOMMEND = 0;
+const PRODUCT_RECOMMEND_MAP = [
+    PRODUCT_RECOMMEND => '推荐',
 ];

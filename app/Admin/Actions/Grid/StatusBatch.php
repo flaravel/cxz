@@ -79,6 +79,7 @@ class StatusBatch extends AbstractTool {
 		];
 	}
 
+
     protected function actionScript()
     {
         $warning = admin_trans('cxz.please_choose');
@@ -106,10 +107,17 @@ JS;
         <span class="sr-only"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li class='dropdown-item'><a {$this->formatHtmlAttributes()} data-new="1" href="javascript:void(0)">设为新品</a></li>
-       <li class='dropdown-item'><a {$this->formatHtmlAttributes()} data-new="0" href="javascript:void(0)">取消新品</a></li>
+       {$this->getAction()}
     </ul>
 </div>
 HTML;
 	}
+
+	protected function getAction() {
+	    $str = '';
+	    foreach ($this->textArray as $key => $value) {
+	        $str .= "<li class='dropdown-item'><a {$this->formatHtmlAttributes()} data-new={$key} href='javascript:void(0);'>{$value}</a></li>";
+        }
+	    return $str;
+    }
 }
