@@ -28,12 +28,12 @@ class Trashed extends AbstractTool {
 
 	protected $type;  // 1回收站 0 返回
 
-	public function __construct(string  $resource = null,int $type = 1,string $model) {
+	public function __construct(string  $resource = null,int $type = 1,string $model = null) {
 		$title          = $type ? admin_trans('cxz.trashed') : admin_trans('cxz.back');
         $icon           = $type ? 'icon-trash-2' : 'icon-repeat';
 		$this->resource = $resource;
 		$this->type = $type;
-        $count = $model::query()->onlyTrashed()->count();
+        $count = is_null($model) ? 0 : $model::query()->onlyTrashed()->count();
         $title = $count > 0 ? $title."({$count})" : $title;
 		parent::__construct("<i class='feather {$icon}'> {$title}</i>");
 	}
