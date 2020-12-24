@@ -33,7 +33,7 @@ class ProductBrandController extends AdminController {
 			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
 			$grid->quickSearch(['brand_name'])->placeholder(admin_trans('cxz.please_enter_name'));
-            $this->showRestore($grid, ProductBrand::class);
+            $this->showRestore($grid);
 		});
 	}
 

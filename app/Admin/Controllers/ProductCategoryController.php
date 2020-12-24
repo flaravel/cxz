@@ -35,7 +35,7 @@ class ProductCategoryController extends AdminController {
 			$grid->column('created_at');
 
             $grid->quickSearch(['category_name'])->placeholder(admin_trans('cxz.please_enter_name'));
-			$this->showRestore($grid, ProductCategory::class);
+			$this->showRestore($grid);
 		});
 	}
 

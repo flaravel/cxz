@@ -10,14 +10,15 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Grid\IsNewBatch;
-use App\Admin\Pages\Status;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
 use App\Traits\AdminTrait;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Widgets\Tab;
 
 class ProductController extends AdminController {
 	use AdminTrait;
@@ -42,7 +43,6 @@ class ProductController extends AdminController {
             });
 			$grid->column('price');
 			$grid->column('market_price');
-			$grid->column('on_sale')->switch();
 			$grid->column('sales', admin_trans('product.fields.sales'))->display(function () {
 				/**@var $product Product*/
 				$product = $this;
@@ -67,13 +67,21 @@ class ProductController extends AdminController {
 				})->width(3)->select($tree);
 			});
 
-			$grid->header(function () use ($grid) {
-				return (new Status())->status(Product::$saleMap)->default(Product::ON_SALE());
+            // 状态查询和快捷状态TAB一起使用
+            $this->showStatusFilter($grid,'on_sale', Product::ON_SALE());
+			$grid->header(function () {
+                //快捷状态TAB
+                return $this->showStatusTab([1 => '出售中', 0 => '已下架']);
 			});
 
-			$this->showRestore($grid, Product::class);
-			$this->showBatchOnSale($grid, Product::class, 'on_sale', 1);
-			$grid->tools(request('_scope_') == 'trashed' ? '':new IsNewBatch(Product::class));
+			// 恢复按钮
+			$this->showRestore($grid);
+			// 上下架按钮
+			$this->showOnSaleButton($grid);
+            // 是否上新按钮
+			$grid->tools([
+                request('_scope_') == 'trashed' ? '':new IsNewBatch(Product::class)
+            ]);
 		});
 	}
 

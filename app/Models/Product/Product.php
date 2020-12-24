@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $on_sale 是否上架 0-下架 1-上架
  * @property int $sort 排序 数字越大越靠前
  * @property int $stock 库存
+ * @property int $is_new 是否新品 0-否 1-是
  * @property int $sales_actual 实际销量
  * @property int $sales_initial 初始销量
  * @property string $content 产品详情

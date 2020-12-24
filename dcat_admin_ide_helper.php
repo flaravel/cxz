@@ -72,6 +72,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection product_banner
      * @property Grid\Column|Collection price
      * @property Grid\Column|Collection market_price
+     * @property Grid\Column|Collection is_recommend
+     * @property Grid\Column|Collection is_new
      * @property Grid\Column|Collection stock
      * @property Grid\Column|Collection sales_actual
      * @property Grid\Column|Collection sales_initial
@@ -144,6 +146,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection product_banner(string $label = null)
      * @method Grid\Column|Collection price(string $label = null)
      * @method Grid\Column|Collection market_price(string $label = null)
+     * @method Grid\Column|Collection is_recommend(string $label = null)
+     * @method Grid\Column|Collection is_new(string $label = null)
      * @method Grid\Column|Collection stock(string $label = null)
      * @method Grid\Column|Collection sales_actual(string $label = null)
      * @method Grid\Column|Collection sales_initial(string $label = null)
@@ -221,6 +225,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection product_banner
      * @property Show\Field|Collection price
      * @property Show\Field|Collection market_price
+     * @property Show\Field|Collection is_recommend
+     * @property Show\Field|Collection is_new
      * @property Show\Field|Collection stock
      * @property Show\Field|Collection sales_actual
      * @property Show\Field|Collection sales_initial
@@ -293,6 +299,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection product_banner(string $label = null)
      * @method Show\Field|Collection price(string $label = null)
      * @method Show\Field|Collection market_price(string $label = null)
+     * @method Show\Field|Collection is_recommend(string $label = null)
+     * @method Show\Field|Collection is_new(string $label = null)
      * @method Show\Field|Collection stock(string $label = null)
      * @method Show\Field|Collection sales_actual(string $label = null)
      * @method Show\Field|Collection sales_initial(string $label = null)
@@ -307,7 +315,7 @@ namespace Dcat\Admin {
     class Show {}
 
     /**
-
+     
      */
     class Form {}
 
@@ -315,14 +323,19 @@ namespace Dcat\Admin {
 
 namespace Dcat\Admin\Grid {
     /**
-
+     
      */
     class Column {}
+
+    /**
+     
+     */
+    class Filter {}
 }
 
 namespace Dcat\Admin\Show {
     /**
-
+     
      */
     class Field {}
 }
