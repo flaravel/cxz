@@ -71,17 +71,13 @@ class ProductController extends AdminController {
 				})->width(3);
 			});
 
-			// 状态查询和快捷状态TAB一起使用
-			$this->showStatusFilter($grid, 'on_sale', UP_SALE);
-			$grid->header(function () use ($grid) {
-				//快捷状态TAB 筛选
-				return $this->showStatusTab([1 => '出售中', 0 => '已下架'], UP_SALE, $grid, 'on_sale');
-			});
+            // 状态快捷查询
+            Tools::showStatusFilter($grid,[1 => '出售中', 0 => '已下架'],'on_sale',UP_SALE);
 
 			// 上下架按钮
 			$this->showOnSaleButton($grid);
 
-			// 状态批量操作按钮
+			// 状态批量操作按钮(回收站不展示)
 			if (request('_scope_') != 'trashed') {
 				$grid->tools([
 					Tools::getProductNew(),
@@ -91,6 +87,8 @@ class ProductController extends AdminController {
 
             // 恢复按钮
             $this->showRestore($grid);
+
+			// 删除按钮
 
 			$grid->showColumnSelector();
 		});

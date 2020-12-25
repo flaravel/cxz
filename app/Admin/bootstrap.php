@@ -64,15 +64,5 @@ Form::resolving(function (Form $form) {
     $form->disableCreatingCheck();
 });
 
-$script = <<<JS
-      $("#grid-table > tbody > tr").on("dblclick",function() {
-         var obj = $(this).find(".feather.icon-edit");
-         if (obj.length == 1) {
-             obj.trigger("click")
-         }
-      })
-JS;
-Admin::script($script);
-
 app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));
 
