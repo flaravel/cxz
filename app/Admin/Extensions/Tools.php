@@ -87,7 +87,11 @@ JS;
                         }
                         $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
                     });
-                    $count = $query->count();
+                    if (request('_scope_') != 'trashed') {
+                        $count = $query->count();
+                    } else {
+                        $count = $query->onlyTrashed()->count();
+                    }
                 }
                 $tab->addLink(isset($count) ? $value."($count)" : $value,url(request()->fullUrlWithQuery(['_status' => $key])),$status);
             }
