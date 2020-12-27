@@ -9,16 +9,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
 use App\Traits\AdminTrait;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class ProductCategoryController extends AdminController {
-    use AdminTrait;
+	use AdminTrait;
 
 	/**
 	 * Make a grid builder.
@@ -34,7 +32,7 @@ class ProductCategoryController extends AdminController {
 			$grid->column('on_sale')->switch();
 			$grid->column('created_at');
 
-            $grid->quickSearch(['category_name'])->placeholder(admin_trans('cxz.please_enter_name'));
+			$grid->quickSearch(['category_name'])->placeholder(admin_trans('cxz.please_enter_name'));
 			$this->showRestore($grid);
 		});
 	}
@@ -57,7 +55,7 @@ class ProductCategoryController extends AdminController {
 				->uniqueName()
 				->maxSize(1 * 1024)
 				->autoUpload()
-                ->saveAsString()
+				->saveAsString()
 				->saveFullUrl();
 			$form->number('sort')->value(50);
 			$form->switch('on_sale');

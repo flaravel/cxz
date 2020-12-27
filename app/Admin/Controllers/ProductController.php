@@ -71,8 +71,8 @@ class ProductController extends AdminController {
 				})->width(3);
 			});
 
-            // 状态快捷查询
-            Tools::showStatusFilter($grid,[1 => '出售中', 0 => '已下架'],'on_sale',UP_SALE);
+			// 状态快捷查询
+			Tools::showStatusFilter($grid, [1 => '出售中', 0 => '已下架'], 'on_sale', UP_SALE);
 
 			// 上下架按钮
 			$this->showOnSaleButton($grid);
@@ -85,8 +85,8 @@ class ProductController extends AdminController {
 				]);
 			}
 
-            // 恢复按钮
-            $this->showRestore($grid);
+			// 恢复按钮
+			$this->showRestore($grid);
 
 			// 删除按钮
 
@@ -101,7 +101,9 @@ class ProductController extends AdminController {
 	 */
 	protected function form() {
 		return Form::make(Product::with('properties'), function (Form $form) {
-			$form->tab(admin_trans('cxz.goods.setting'), function (Form $form) {
+			$form->tab(admin_trans('cxz.goods.skus'), function (Form $form) {
+                $form->sku('sku','')->width(12);
+            })->tab(admin_trans('cxz.goods.setting'), function (Form $form) {
 				$form->select('category_id')->options(function () {
 					return collect(ProductCategory::selectOptions())->forget(0);
 				})->saving(function ($v) {
@@ -142,7 +144,6 @@ class ProductController extends AdminController {
 					$form->text('name');
 					$form->text('value');
 				});
-			})->tab(admin_trans('cxz.goods.skus'), function (Form $form) {
 			});
 		});
 	}

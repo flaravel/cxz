@@ -64,5 +64,7 @@ Form::resolving(function (Form $form) {
     $form->disableCreatingCheck();
 });
 
+Form::extend('sku', \App\Admin\Extensions\Sku::class);
+
 app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));
 
