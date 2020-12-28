@@ -88,8 +88,6 @@ class ProductController extends AdminController {
 			// 恢复按钮
 			$this->showRestore($grid);
 
-			// 删除按钮
-
 			$grid->showColumnSelector();
 		});
 	}

@@ -280,7 +280,7 @@ return [
         // default, blue, blue-light, green
         'color' => 'default',
 
-        'body_class' => 'sidebar-separate',
+        'body_class' => '',
 
         'sidebar_collapsed' => false,
 
