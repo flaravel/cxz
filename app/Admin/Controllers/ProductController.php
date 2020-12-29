@@ -99,8 +99,8 @@ class ProductController extends AdminController {
 	 */
 	protected function form() {
 		return Form::make(Product::with('properties'), function (Form $form) {
-			$form->tab(admin_trans('cxz.goods.skus'), function (Form $form) {
-                $form->sku('sku','')->width(12);
+			$form->tab('规格',function (Form $form) {
+                $form->sku('skus','商品规格');
             })->tab(admin_trans('cxz.goods.setting'), function (Form $form) {
 				$form->select('category_id')->options(function () {
 					return collect(ProductCategory::selectOptions())->forget(0);
@@ -121,19 +121,13 @@ class ProductController extends AdminController {
 				$form->number('sales_initial')->min(0)->max(9999999)->help(admin_trans('cxz.goods_sales_help'))->default(0);
 				$form->number('stock')->min(0)->help(admin_trans('cxz.goods_stock_help'));
 			})->tab(admin_trans('cxz.goods.resource'), function (Form $form) {
-				$form->image('product_image')
-					->uniqueName()
-					->autoUpload()
-					->saveFullUrl()
-					->required()
-					->maxSize(1 * 1024);
 				$form->multipleImage('product_banner')
 					->uniqueName()
 					->autoUpload()
 					->saveFullUrl()
 					->options()
 					->required()
-					->limit(5)
+					->limit(10)
 					->maxSize(1 * 1024)
 					->help(admin_trans('cxz.goods.more_image_max'));
 				$form->editor('content')->required();

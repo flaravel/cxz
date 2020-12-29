@@ -315,7 +315,7 @@ namespace Dcat\Admin {
     class Show {}
 
     /**
-     * @method \App\Admin\Extensions\Sku sku(...$params)
+     * @method \Flaravel\Dcat\Http\Feild\Sku sku(...$params)
      */
     class Form {}
 
