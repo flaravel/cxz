@@ -732,6 +732,7 @@ class ComposerStaticInit1c9fffa1ffab02611ccad23a2154d91b
         'App\\Admin\\Controllers\\ProductBrandController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductBrandController.php',
         'App\\Admin\\Controllers\\ProductCategoryController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductCategoryController.php',
         'App\\Admin\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductController.php',
+        'App\\Admin\\Extensions\\Sku' => __DIR__ . '/../..' . '/app/Admin/Extensions/Sku.php',
         'App\\Admin\\Extensions\\Tools' => __DIR__ . '/../..' . '/app/Admin/Extensions/Tools.php',
         'App\\Admin\\Metrics\\Examples\\NewDevices' => __DIR__ . '/../..' . '/app/Admin/Metrics/Examples/NewDevices.php',
         'App\\Admin\\Metrics\\Examples\\NewUsers' => __DIR__ . '/../..' . '/app/Admin/Metrics/Examples/NewUsers.php',

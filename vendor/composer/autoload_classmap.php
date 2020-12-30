@@ -17,6 +17,7 @@ return array(
     'App\\Admin\\Controllers\\ProductBrandController' => $baseDir . '/app/Admin/Controllers/ProductBrandController.php',
     'App\\Admin\\Controllers\\ProductCategoryController' => $baseDir . '/app/Admin/Controllers/ProductCategoryController.php',
     'App\\Admin\\Controllers\\ProductController' => $baseDir . '/app/Admin/Controllers/ProductController.php',
+    'App\\Admin\\Extensions\\Sku' => $baseDir . '/app/Admin/Extensions/Sku.php',
     'App\\Admin\\Extensions\\Tools' => $baseDir . '/app/Admin/Extensions/Tools.php',
     'App\\Admin\\Metrics\\Examples\\NewDevices' => $baseDir . '/app/Admin/Metrics/Examples/NewDevices.php',
     'App\\Admin\\Metrics\\Examples\\NewUsers' => $baseDir . '/app/Admin/Metrics/Examples/NewUsers.php',
