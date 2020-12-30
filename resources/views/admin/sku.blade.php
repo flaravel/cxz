@@ -10,11 +10,11 @@
             <div class="card">
                 <div class="card-body">
                     <div v-for="(item, index) in specification" :key="index">
-                        <span v-if="!cacheSpecification[index].status">@{{ item.name }}</span>
+                        <span v-if="!cacheSpecification[index].status">@{{ item.name }} <i style="cursor: pointer" class="feather icon-edit" v-if="!cacheSpecification[index].status" v-on:click="updateSpec(index)"></i></span>
                         <span style="float:right;cursor: pointer" v-on:click="delSpec(index)"><i class="feather icon-x"></i></span>
                         <div class="input-group mb-2" v-if="cacheSpecification[index].status" style="width: 25%">
                             <input type="text" class="form-control" v-model="cacheSpecification[index].name" placeholder="输入产品规格" @keyup.native.enter="saveSpec(index)">
-                            <div class="input-group-prepend" v-on:click="saveSpec(index)">
+                            <div style="cursor: pointer" class="input-group-prepend" v-on:click="saveSpec(index)">
                                 <span class="input-group-text"><i class="feather icon-check"></i></span>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             v-for="(item, index) in countSum(0)">
                             <template v-for="(n, specIndex) in specification.length">
                                 <td
-                                    style="vertical-align: middle!important;text-align:right"
+                                    style="vertical-align: middle!important"
                                     v-if="showTd(specIndex, index)"
                                     :key="n"
                                     :rowspan="countSum(n)">
@@ -116,8 +116,8 @@
                         </tr>
                         <tr>
                             <td colspan="8" class="wh-foot">
-                                <span class="label">批量设置：</span>
                                 <template v-if="isSetListShow">
+                                    <span>批量设置：</span>
                                     <button type="button" class="btn btn-primary" v-on:click="openBatch('childProductCost')">成本价</button>
                                     <button type="button" class="btn btn-primary" v-on:click="openBatch('childProductStock')">库存</button>
                                     <button type="button" class="btn btn-primary" v-on:click="openBatch('childProductPrice')">销售价</button>
@@ -499,7 +499,12 @@ var vm = new Vue({
             this.batchValue = ''
             this.currentType = ''
             this.isSetListShow = true
-        }
+        },
+        // 修改状态
+        updateSpec(index) {
+            this.cacheSpecification[index].status = true
+            this.cacheSpecification[index].name = this.specification[index].name
+        },
     }
 })
 </script>
