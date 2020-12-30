@@ -70,7 +70,7 @@
                             v-for="(item, index) in countSum(0)">
                             <template v-for="(n, specIndex) in specification.length">
                                 <td
-                                    style="vertical-align: middle!important;"
+                                    style="vertical-align: middle!important;text-align:right"
                                     v-if="showTd(specIndex, index)"
                                     :key="n"
                                     :rowspan="countSum(n)">
