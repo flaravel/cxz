@@ -66,5 +66,4 @@ Form::resolving(function (Form $form) {
 });
 
 Form::extend('sku', Sku::class);
-app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));
 
