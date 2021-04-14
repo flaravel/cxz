@@ -130,7 +130,7 @@ class ProductController extends AdminController {
 					->limit(10)
 					->maxSize(1 * 1024)
 					->help(admin_trans('cxz.goods.more_image_max'));
-				$form->editor('content')->required();
+				$form->ueditor('content')->required()->height('400')->path('goods');;
 			})->tab(admin_trans('cxz.goods.attributes'), function (Form $form) {
 				$form->hasMany('properties', '', function (Form\NestedForm $form) {
 					$form->text('name');

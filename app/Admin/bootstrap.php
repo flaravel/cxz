@@ -66,4 +66,5 @@ Form::resolving(function (Form $form) {
 });
 
 Form::extend('sku', Sku::class);
+Form::extend('ueditor', \App\Admin\Extensions\Ueditor::class);
 

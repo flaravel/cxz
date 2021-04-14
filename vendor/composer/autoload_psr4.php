@@ -59,6 +59,7 @@ return array(
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src/Prophecy'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
+    'Overtrue\\LaravelUEditor\\' => array($vendorDir . '/overtrue/laravel-ueditor/src'),
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
     'OSS\\' => array($vendorDir . '/aliyuncs/oss-sdk-php/src/OSS'),
     'Nyholm\\Psr7\\' => array($vendorDir . '/nyholm/psr7/src'),
