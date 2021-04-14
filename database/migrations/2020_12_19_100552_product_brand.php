@@ -26,7 +26,7 @@ class ProductBrand extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        $this->createTableName('product_brand','品牌表');
+        $this->createTableName('product_brands','品牌表');
     }
 
     /**

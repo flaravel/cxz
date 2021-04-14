@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Dcat\Admin\Models\AdminTablesSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

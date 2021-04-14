@@ -72,7 +72,7 @@ class ProductController extends AdminController {
 			});
 
 			// 状态快捷查询
-			Tools::showStatusFilter($grid, [1 => '出售中', 0 => '已下架'], 'on_sale', UP_SALE);
+			Tools::showStatusFilter($grid, [1 => '已上架', 0 => '已下架'], 'on_sale', UP_SALE);
 
 			// 上下架按钮
 			$this->showOnSaleButton($grid);
@@ -89,7 +89,6 @@ class ProductController extends AdminController {
 			$this->showRestore($grid);
 
 			// 删除按钮
-
 			$grid->showColumnSelector();
 		});
 	}

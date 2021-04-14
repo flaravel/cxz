@@ -26,6 +26,7 @@ class Trashed extends AbstractTool {
 
 	protected $type;  // 1回收站 0 返回
 
+
 	public function __construct(string  $resource = null,int $type = 1,string $model = null) {
 		$title          = $type ? admin_trans('cxz.trashed') : admin_trans('cxz.back');
         $icon           = $type ? 'icon-trash-2' : 'icon-repeat';

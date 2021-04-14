@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Product\Product;
 use App\Models\Product\ProductBrand;
 use App\Models\Product\ProductCategory;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -63,26 +64,24 @@ class Test extends Command
         ]);
         $data = $res->json();
         foreach ($data['data']['categoryGroupList'] as $v) {
-//            if (ProductCategory::query()->where('category_name',$v['name'])->exists()) {
-//              continue;
-//            }
-//            $pcreate = ProductCategory::query()->create([
-//                'parent_id' => 203,
-//                'category_name' => $v['name'],
-//                'on_sale' => 1,
-//                'sort' => 0
-//            ]);
+            if (ProductCategory::query()->where('category_name',$v['name'])->exists()) {
+              continue;
+            }
+            $pcreate = ProductCategory::query()->create([
+                'parent_id' => 0,
+                'category_name' => $v['name'],
+                'on_sale' => 1,
+                'sort' => 0
+            ]);
             foreach ($v['categoryList'] as $vv) {
-//                $str = 'product/brand/'.Str::random(40).'.png';
-//                Storage::disk('oss')->put($str,file_get_contents($vv['wapBannerUrl']));
-//                $path = Storage::disk('oss')->url($str);
-//                $create = ProductCategory::query()->create([
-//                    'parent_id' => $pcreate->id,
-//                    'category_name' => $vv['name'],
-//                    'category_image' => $path,
-//                    'on_sale' => 1,
-//                    'sort' => 0
-//                ]);
+                $path = $vv['wapBannerUrl'];
+                ProductCategory::query()->create([
+                    'parent_id' => $pcreate->id,
+                    'category_name' => $vv['name'],
+                    'category_image' => $path,
+                    'on_sale' => 1,
+                    'sort' => 0
+                ]);
                 $this->goods($vv['superCategoryId'], $vv['id'],$vv['name']);
             }
         }
@@ -113,16 +112,14 @@ class Test extends Command
                 'Accept' => 'application/json'
             ])->get($url2);
             $detail = $detail->json();
-            $str = 'product/'.Str::random(40).'.png';
-            Storage::disk('oss')->put($str,file_get_contents($v['listPicUrl']));
-            $imagePath = Storage::disk('oss')->url($str);
+            $imagePath = $v['listPicUrl'];
             $goods = new Product();
             $goods->category_id = $cateId;
             $goods->product_name = $v['name'];
             $goods->product_banner = [
-                $this->getImage($detail['item']['itemDetail']['picUrl1']),
-                $this->getImage($detail['item']['itemDetail']['picUrl2']),
-                $this->getImage($detail['item']['itemDetail']['picUrl3']),
+                $detail['item']['itemDetail']['picUrl1'],
+                $detail['item']['itemDetail']['picUrl2'],
+                $detail['item']['itemDetail']['picUrl3']
             ];
             $goods->selling_point  = $v['simpleDesc'];
             $goods->product_image = $imagePath;
@@ -147,7 +144,7 @@ class Test extends Command
         }
     }
 
-    private function getImage($url) {
+    private function getImage() {
         $str = 'product/'.Str::random(40).'.png';
         Storage::disk('oss')->put($str,file_get_contents($url));
         return Storage::disk('oss')->url($str);
