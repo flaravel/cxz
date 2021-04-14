@@ -8,9 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
+// import 'element-ui/lib/theme-chalk/index.css';
+//
+// Vue.use(ElementUI);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,7 +21,9 @@ Vue.use(ElementUI);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('sku', require('./components/Sku.vue').default);
+// Vue.component('upload-only', require('./components/image/Only').default);
+// // Vue.component('files', require('./components/files/Index').default);
+// Vue.component('sku', require('./components/admin/Sku.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

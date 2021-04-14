@@ -10,10 +10,11 @@
  * visited
  */
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid\Filter;
-use \Dcat\Admin\Grid;
+use Dcat\Admin\Grid;
+use App\Admin\Extensions\Sku;
+
 /**
  * Dcat-admin - admin builder based on Laravel.
  * @author jqh <https://github.com/jqhph>
@@ -64,7 +65,5 @@ Form::resolving(function (Form $form) {
     $form->disableCreatingCheck();
 });
 
-Form::extend('sku', \App\Admin\Extensions\Sku::class);
-
-app('view')->prependNamespace('admin', resource_path('/views/vendor/dcat-admin/views'));
+Form::extend('sku', Sku::class);
 

@@ -23,6 +23,9 @@ Route::group([
 ], function (Router $router) {
 	$router->get('/', 'HomeController@index');
 
+	// 文件
+	$router->resource('file', 'FileController');
+
 	// 产品相关
 	$router->group(['prefix' => 'product'], function (Router $router) {
 
