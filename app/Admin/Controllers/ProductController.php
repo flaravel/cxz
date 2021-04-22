@@ -99,9 +99,7 @@ class ProductController extends AdminController {
 	 */
 	protected function form() {
 		return Form::make(Product::with('properties'), function (Form $form) {
-			$form->tab('规格',function (Form $form) {
-                $form->sku('skus','商品规格');
-            })->tab(admin_trans('cxz.goods.setting'), function (Form $form) {
+			$form->tab(admin_trans('cxz.goods.setting'), function (Form $form) {
 				$form->select('category_id')->options(function () {
 					return collect(ProductCategory::selectOptions())->forget(0);
 				})->saving(function ($v) {
@@ -136,7 +134,16 @@ class ProductController extends AdminController {
 					$form->text('name');
 					$form->text('value');
 				});
-			});
+			})->tab('规格',function (Form $form) {
+                $form->sku('sku','商品规格');
+            });
+
+			$form->saving(function (Form $form) {
+                // 判断是否是新增操作
+                if ($form->isCreating()) {
+                    dd(request()->all());
+                }
+            });
 		});
 	}
 }

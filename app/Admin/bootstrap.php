@@ -50,7 +50,7 @@ Grid::resolving(function (Grid $grid) {
         $actions->disableView();
         $actions->disableEdit();
     });
-    $grid->option('dialog_form_area',['70%','80%']);
+    $grid->option('dialog_form_area',['60%','80%']);
     $grid->toolsWithOutline(false);
     if (request('_scope_') == 'trashed') {
         $grid->disableCreateButton();

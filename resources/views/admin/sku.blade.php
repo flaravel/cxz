@@ -6,14 +6,14 @@
 
         @include('admin::form.error')
 
-        <div {!! $attributes !!} style="width: 100%; height: 100%;">
+        <div {!! $attributes !!} style="width: 100%; height: 100%;" v-cloak>
             <div class="card">
                 <div class="card-body">
                     <div v-for="(item, index) in specification" :key="index">
                         <span v-if="!cacheSpecification[index].status">@{{ item.name }} <i style="cursor: pointer" class="feather icon-edit" v-if="!cacheSpecification[index].status" v-on:click="updateSpec(index)"></i></span>
                         <span style="float:right;cursor: pointer" v-on:click="delSpec(index)"><i class="feather icon-x"></i></span>
-                        <div class="input-group mb-2" v-if="cacheSpecification[index].status" style="width: 25%">
-                            <input type="text" class="form-control" v-model="cacheSpecification[index].name" placeholder="输入产品规格" @keyup.native.enter="saveSpec(index)">
+                        <div class="input-group mb-2 " v-if="cacheSpecification[index].status" style="width: 20%">
+                            <input type="text" class="form-control" v-model="cacheSpecification[index].name" placeholder="输入产品规格">
                             <div style="cursor: pointer" class="input-group-prepend" v-on:click="saveSpec(index)">
                                 <span class="input-group-text"><i class="feather icon-check"></i></span>
                             </div>
@@ -31,8 +31,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="input-group mb-3" style="width: 25%;cursor: pointer">
-                            <input type="text" class="form-control" v-model="addValues[index]" placeholder="多个产品属性以空格隔开">
+                        <div class="input-group mb-3" style="cursor: pointer">
+                            <input type="text" class="form-control" v-model="addValues[index]" placeholder="多个产品属性以空格隔开,回车可以快速添加" v-on:keypress.enter.prevent="addSpecTag(index)">
                             <div class="input-group-append" v-on:click="addSpecTag(index)">
                                 <span class="input-group-text" ><i class="feather icon-check"></i></span>
                             </div>
@@ -61,7 +61,7 @@
                             <th>成本价（元）</th>
                             <th>销售价（元）</th>
                             <th>库存</th>
-                            <th>是否启用</th>
+                            <th>图片</th>
                         </tr>
                         </thead>
                         <tbody v-if="specification[0] && specification[0].value.length">
@@ -70,22 +70,13 @@
                             v-for="(item, index) in countSum(0)">
                             <template v-for="(n, specIndex) in specification.length">
                                 <td
-                                    style="vertical-align: middle!important"
+                                    style="vertical-align: middle!important;text-align: center"
                                     v-if="showTd(specIndex, index)"
                                     :key="n"
                                     :rowspan="countSum(n)">
                                     @{{getSpecAttr(specIndex, index)}}
                                 </td>
                             </template>
-{{--                            <td>--}}
-{{--                                <input--}}
-{{--                                    type="text"--}}
-{{--                                    class="form-control"--}}
-{{--                                    :disabled="!childProductArray[index].isUse"--}}
-{{--                                    v-model="childProductArray[index].childProductNo"--}}
-{{--                                    v-on:blur="handleNo(index)"--}}
-{{--                                    placeholder="输入商品规格编号">--}}
-{{--                            </td>--}}
                             <td>
                                 <input
                                     type="text"
@@ -111,7 +102,17 @@
                                     :disabled="!childProductArray[index].isUse">
                             </td>
                             <td>
-                                <input type="checkbox" name="on_sale" v-on:change="(val) => {handleUserChange(index, val)}" class="field_on_sale" data-size="small" data-color="#586cb1" v-model="childProductArray[index].isUse" data-plugin="form-W8oh1vxmswitchery">
+                                <div class="image-container">
+                                    <div class="image-upload-only">
+                                        <div tabindex="0" class="el-upload el-upload--text">
+                                            <img v-if="childProductArray[index].childProductImage" :src="childProductArray[index].childProductImage" class="avatar" style="height: 45px;width: 45px">
+                                            <i v-else class="el-icon-plus avatar-uploader-icon" style="height: 45px;width: 45px;line-height: 45px"></i>
+                                            <div v-if="childProductArray[index].childProductImage" class="el-loading-mask">
+                                                <i class="close el-icon-delete" @click.stop="deleted"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -203,8 +204,6 @@ var vm = new Vue({
             childProductArray: [],
             // 用来存储要添加的规格属性
             addValues: [],
-            // 默认商品编号
-            defaultProductNo: 'PRODUCTNO_',
             // 批量设置相关
             isSetListShow: true,
             batchValue: '', // 批量设置所绑定的值
@@ -318,7 +317,7 @@ var vm = new Vue({
             let childProduct = {
                 childProductId: 0,
                 childProductSpec: this.getChildProductSpec(index),
-                // childProductNo: this.defaultProductNo + index,
+                childProductImage: '',
                 childProductStock: 0,
                 childProductPrice: 0,
                 childProductCost: 0,
@@ -508,3 +507,31 @@ var vm = new Vue({
     }
 })
 </script>
+<style lang="scss">
+    .table tr td:first-child, .table tr th:first-child {
+        padding-left: 0;
+    }
+    [ v-cloak ] { display : none }
+    .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .el-upload:hover {
+        .el-loading-mask{display:block;}
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 50%;
+        color: #8c939d;
+        text-align: center;
+    }
+    .avatar {
+        display: block;
+    }
+    .el-loading-mask{display: none;
+        .close{position:absolute;z-index:5;left:50%;top:50%;}
+    }
+</style>
