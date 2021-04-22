@@ -27,7 +27,8 @@ class ProductController extends AdminController {
 	 */
 	protected function grid() {
 		return Grid::make(Product::with(['category','brand']), function (Grid $grid) {
-			$grid->column('id')->sortable();
+            $grid->createMode(Grid::CREATE_MODE_DEFAULT);
+            $grid->column('id')->sortable();
 			$grid->column('product_image')->image('', 90, 90);
 			$grid->column('product_name')->append(function () {
 				$new = PRODUCT_NEW_MAP[$this->is_new] ?? '';
@@ -129,14 +130,7 @@ class ProductController extends AdminController {
 					->maxSize(1 * 1024)
 					->help(admin_trans('cxz.goods.more_image_max'));
 				$form->ueditor('content')->required()->height('400')->path('goods');;
-			})->tab(admin_trans('cxz.goods.attributes'), function (Form $form) {
-				$form->hasMany('properties', '', function (Form\NestedForm $form) {
-					$form->text('name');
-					$form->text('value');
-				});
-			})->tab('规格',function (Form $form) {
-                $form->sku('sku','商品规格');
-            });
+			});
 
 			$form->saving(function (Form $form) {
                 // 判断是否是新增操作
